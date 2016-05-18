@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.profile')
+  angular.module('ROA.pages.profile')
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */

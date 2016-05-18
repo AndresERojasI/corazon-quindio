@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.ui.modals')
+  angular.module('ROA.pages.ui.modals')
       .controller('NotificationsCtrl', NotificationsCtrl);
 
   /** @ngInject */

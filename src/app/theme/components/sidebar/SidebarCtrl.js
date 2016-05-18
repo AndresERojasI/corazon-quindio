@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.theme.components')
+  angular.module('ROA.theme.components')
     .controller('SidebarCtrl', SidebarCtrl);
 
   /** @ngInject */

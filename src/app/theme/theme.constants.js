@@ -32,7 +32,7 @@
     white: '#10c4b5',
   };
 
-  angular.module('BlurAdmin.theme')
+  angular.module('ROA.theme')
     .constant('layoutColors', {
       default: basic.default,
       defaultText: basic.defaultText,

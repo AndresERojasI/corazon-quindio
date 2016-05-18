@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.dashboard')
+  angular.module('ROA.pages.dashboard')
       .directive('dashboardMap', dashboardMap);
 
   /** @ngInject */

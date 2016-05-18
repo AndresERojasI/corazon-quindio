@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.dashboard')
+  angular.module('ROA.pages.dashboard')
       .controller('DashboardMapCtrl', DashboardMapCtrl);
 
   /** @ngInject */

@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.components.mail')
+  angular.module('ROA.pages.components.mail')
     .controller('MailListCtrl', MailListCtrl);
 
   /** @ngInject */

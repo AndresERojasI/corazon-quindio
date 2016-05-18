@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.maps')
+  angular.module('ROA.pages.maps')
       .controller('MapBubblePageCtrl', MapBubblePageCtrl);
 
   /** @ngInject */
