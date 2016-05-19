@@ -9,12 +9,6 @@
     'ui.router',
 
     'ROA.pages.dashboard',
-    'ROA.pages.ui',
-    'ROA.pages.components',
-    'ROA.pages.form',
-    'ROA.pages.tables',
-    'ROA.pages.charts',
-    'ROA.pages.maps',
     'ROA.pages.profile',
   ])
       .config(routeConfig);
