@@ -8,8 +8,7 @@
   angular.module('ROA.pages', [
     'ui.router',
 
-    'ROA.pages.dashboard',
-    'ROA.pages.profile',
+    'ROA.pages.dashboard'
   ])
       .config(routeConfig);
 

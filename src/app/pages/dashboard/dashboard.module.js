@@ -6,20 +6,21 @@
   'use strict';
 
   angular.module('ROA.pages.dashboard', [])
-      .config(routeConfig);
-
-  /** @ngInject */
-  function routeConfig($stateProvider) {
-    $stateProvider
-        .state('dashboard', {
-          url: '/dashboard',
-          templateUrl: 'app/pages/dashboard/dashboard.html',
-          title: 'Dashboard',
-          sidebarMeta: {
-            icon: 'ion-android-home',
-            order: 0,
-          },
-        });
-  }
+      .config(function($stateProvider){
+        $stateProvider
+          .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: 'app/pages/dashboard/dashboard.html',
+            title: 'Dashboard',
+            sidebarMeta: {
+              icon: 'ion-android-home',
+              order: 0,
+            },
+            controller: 'DashboardCtrl'
+          });
+      })
+      .controller('DashboardCtrl', ['$scope', function ($scope) {
+        
+      }]);
 
 })();

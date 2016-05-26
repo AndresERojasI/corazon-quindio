@@ -1,0 +1,60 @@
+/**
+ * @author v.lugovksy
+ * created on 16.12.2015
+ */
+(function () {
+  'use strict';
+
+  angular.module('ROA.theme.directives')
+      .controller('TrafficChartCtrl', TrafficChartCtrl);
+
+  /** @ngInject */
+  function TrafficChartCtrl(layoutColors, $scope) {
+    var palette = layoutColors.bgColorPalette;
+    $scope.doughnutData = [
+      {
+        value: 1000,
+        color: palette.gossip,
+        highlight: palette.gossipDark,
+        label: 'Ad Campaigns',
+        percentage: 17,
+        order: 0,
+      },{
+        value: 1400,
+        color: palette.white,
+        highlight: palette.whiteDark,
+        label: 'Other',
+        percentage: 87,
+        order: 1,
+      }, {
+        value: 1500,
+        color: palette.blueStone,
+        highlight: palette.blueStoneDark,
+        label: 'Search engines',
+        percentage: 22,
+        order: 4,
+      }, {
+        value: 1000,
+        color: palette.surfieGreen,
+        highlight: palette.surfieGreenDark,
+        label: 'Referral Traffic',
+        percentage: 70,
+        order: 3,
+      }, {
+        value: 1200,
+        color: palette.silverTree,
+        highlight: palette.silverTreeDark,
+        label: 'Direct Traffic',
+        percentage: 38,
+        order: 2,
+      },
+    ];
+
+    var ctx = document.getElementById('chart-area').getContext('2d');
+    window.myDoughnut = new Chart(ctx).Doughnut($scope.doughnutData, {
+      segmentShowStroke: false,
+      percentageInnerCutout : 64,
+      responsive: true
+    });
+  }
+})();
