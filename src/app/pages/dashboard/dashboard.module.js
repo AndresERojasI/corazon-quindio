@@ -16,11 +16,28 @@
               icon: 'ion-android-home',
               order: 0,
             },
-            controller: 'DashboardCtrl'
+            controller: 'DashboardCtrl',
+            data: {
+              requireLogin: true
+            }
           });
       })
-      .controller('DashboardCtrl', ['$scope', function ($scope) {
-        
+      .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', function ($rootScope, $scope, AnalyticsService) {
+        $scope.displayContent = AnalyticsService.dashbaordCalculated;
+        // listen for the event in the relevant $rootScope
+        $rootScope.$on('informationLoaded', function(event, data) {
+
+            AnalyticsService.calculateDashboard($scope)
+              .then(function(result){
+                $scope.displayContent = true;
+                AnalyticsService.dashbaordCalculated = true;
+                
+              })
+              .catch(function(error){
+                console.log('Error');
+                console.log(error);
+              });
+        });
       }]);
 
 })();

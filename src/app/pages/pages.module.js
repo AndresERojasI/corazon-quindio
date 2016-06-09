@@ -8,12 +8,15 @@
   angular.module('ROA.pages', [
     'ui.router',
 
-    'ROA.pages.dashboard'
+    'ROA.pages.dashboard',
+    'ROA.pages.login',
+    'ROA.pages.noClient',
   ])
       .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider) {
+    // Define the default route to /dashboard
     $urlRouterProvider.otherwise('/dashboard');
   }
 

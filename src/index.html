@@ -24,9 +24,15 @@
   <!-- endinject -->
   <!-- endbuild -->
 </head>
-<body ng-class="{'mobile' : $isMobile}">
+<body ng-class="{'mobile' : $isMobile, 'auth-bg': $state.includes('login') || $state.includes('noClient')}" >
 <div class="body-bg"></div>
-<main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $isMenuCollapsed }">
+
+<main class="auth-main" ng-if="$pageFinishedLoading && ($state.includes('login') || $state.includes('noClient'))">
+  <div class="auth-block" ui-view>
+  </div>
+</main>
+
+<main ng-if="$pageFinishedLoading && !($state.includes('login') || $state.includes('noClient'))" ng-class="{ 'menu-collapsed': $isMenuCollapsed }">
 
   <sidebar></sidebar>
   <page-top is-menu-collapsed="$isMenuCollapsed"></page-top>
@@ -56,7 +62,6 @@
 <!-- run `gulp inject` to automatically populate bower script dependencies -->
 <!-- endbower -->
 <!-- endbuild -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
 <!-- inject:js -->

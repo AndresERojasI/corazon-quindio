@@ -1,3 +1,215 @@
 @import 'theme/conf/mixins';
 @import 'theme/conf/colorScheme';
 @import 'theme/conf/variables';
+@import "theme/_socicon.scss";
+@import "theme/_layout.scss";
+@import 'theme/buttons.scss';
+@import 'app/form.scss';
+
+html, body {
+  height: 100%;
+}
+
+html {
+  min-height: 520px;
+}
+
+.form-control, .form-control:focus {
+  border-radius: 5px;
+  border: none !important;
+  color: #fff !important;
+  background-color: #313334 !important;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  @include placeholderStyle($default, 0);
+  border: none;
+  color: #fff !important;
+}
+
+.form-control.domain{
+  display: inline-block;
+  width: 50%;
+  @media screen and (max-width: $resXS) {
+    width: 100%;
+  }
+}
+
+.auth-main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.auth-block {
+  width: 540px;
+  margin: 0 auto;
+  border-radius: 5px;
+  color: $default-text;
+  padding: 32px;
+  h1 {
+    font-weight: $font-light;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  p {
+    font-size: 16px;
+    color: #fff !important;
+    margin: 40px 0px;
+  }
+  a {
+    text-decoration: none;
+    outline: none;
+    transition: all 0.2s ease;
+    color: $primary;
+    &:hover {
+      color: $primary-dark;
+    }
+  }
+
+  .control-label {
+    padding-top: 11px;
+    color: $default-text;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  span{
+    color: #fff;
+    font-size: 147%;
+  }
+}
+
+.auth-input {
+  margin-bottom: 24px;
+  input {
+  	background-color: #313334;
+  	color: #fff;
+    display: block;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    padding: 4px 10px;
+    outline: none;
+  }
+}
+
+a.forgot-pass {
+  display: block;
+  text-align: right;
+  margin-bottom: -20px;
+  float: right;
+  z-index: 2;
+  position: relative;
+}
+
+.auth-link {
+  display: block;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 33px;
+}
+
+.auth-sep {
+  margin-top: 36px;
+  margin-bottom: 24px;
+  line-height: 20px;
+  font-size: 16px;
+  text-align: center;
+  display: block;
+  position: relative;
+  & > span {
+    display: table-cell;
+    width: 30%;
+    white-space: nowrap;
+    padding: 0 24px;
+    color: $default-text;
+    & > span {
+      margin-top: -12px;
+      display: block;
+    }
+  }
+  &:before, &:after {
+    border-top: solid 1px $default;
+    content: "";
+    height: 1px;
+    width: 35%;
+    display: table-cell;
+  }
+}
+
+.al-share-auth {
+  text-align: center;
+  .al-share {
+    float: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    li {
+      margin-left: 24px;
+      &:first-child {
+        margin-left: 0;
+      }
+      i {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+.btn-auth {
+  background: $primary;
+  color: #fff !important;
+  border-radius: 5px;
+  border-color: $primary;
+  padding: 7px 12px;
+  &:hover {
+    color: $default-text;
+    background: #313334;
+    border-color: $primary;
+  }
+}
+
+.auth-bg{
+	background-color: #2c2e2f !important;
+}
+
+.btn:hover{
+	transform: none !important;
+}
+
+.ng-invalid.ng-touched {
+  border: 1px solid #FA787E !important;
+}
+
+.form-control .ng-valid.ng-touched {
+  border: 1px solid #78FA89 !important;
+}
+
+.ng-valid       {  }
+.ng-invalid     { 
+  
+}
+.ng-pristine    {  }
+.ng-dirty       {  }
+.ng-touched     {  }
+
+.ng-hide{
+  display: none;
+}
+
+#range-selector{
+  background-color: #2f2f2f;
+  border: 1px solid #212121;
+  color: #fff;
+  font-size: 85%;
+  margin: 0;
+  padding: 5px;
+}
+
+#calendar-range-selector{
+  font-size: 24px;
+  padding: 2px 7px;
+}

@@ -1,5 +1,10 @@
 <aside class="al-sidebar" ng-swipe-right="menuExpand()" ng-swipe-left="menuCollapse()"
        ng-mouseleave="hoverElemTop=selectElemTop">
+  <div ng-hide="$isMenuCollapsed">
+  <span id="calendar-range-selector" class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="ion-android-calendar"></i></span>
+  <input id="range-selector" class="col-lg-10 col-md-10 col-sm-10 col-xs-10" readonly="readonly" type="daterange" ng-model="queryRange" format="MMM D,YYYY" separator=" - ">
+  </div>
+  <div class="clearfix"></div>
   <ul class="al-sidebar-list" slimscroll="{height: '{{menuHeight}}px'}" slimscroll-watch="menuHeight" >
     <li ng-repeat="item in menuItems" class="al-sidebar-list-item"
         ng-class="{'selected': item.selected, 'with-sub-menu': item.subMenu}">

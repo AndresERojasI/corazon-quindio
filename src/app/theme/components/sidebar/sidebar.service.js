@@ -6,6 +6,7 @@
 
   /** @ngInject */
   function sidebarService($state) {
+    var ignoredStates = ['login', 'noClient'];
     var staticMenuItems = [];
 
     this.getMenuItems = function() {
@@ -27,7 +28,9 @@
     function defineMenuItemStates() {
       return $state.get()
           .filter(function(s) {
-            return s.sidebarMeta;
+            // Avoid listing login as a menu item
+            return  (s.name && ignoredStates.indexOf(s.name) >= 0)?
+                      false : s.sidebarMeta;
           })
           .map(function(s) {
             var meta = s.sidebarMeta;

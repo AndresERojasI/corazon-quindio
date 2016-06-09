@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('ROA.theme')
+  angular.module('ROA.theme.services')
     .service('stopableInterval', stopableInterval);
 
   /** @ngInject */

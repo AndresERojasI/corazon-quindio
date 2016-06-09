@@ -12,7 +12,8 @@
       'angular.morris-chart',
       'textAngular',
       'ROA.theme.components',
-      'ROA.theme.directives'
+      'ROA.theme.directives',
+      'ROA.theme.services'
   ]);
 
 })();

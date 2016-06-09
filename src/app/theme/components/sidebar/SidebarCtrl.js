@@ -11,6 +11,22 @@
   /** @ngInject */
   function SidebarCtrl($scope, $rootScope, $timeout, $location, layoutSizes, sidebarService, $element) {
 
+    // Date range selector for global query date administration
+    $scope.$watch('queryRange', function(newValue, oldValue){
+      $rootScope.$broadcast('queryRangeChanged', {
+        queryRange: newValue
+      });
+    });
+
+    $rootScope.$on('settingsChanged', function (event, data) {
+        if(data.settings !== undefined && data.settings.userSettings !== undefined){
+          angular.element('#range-selector').data('daterangepicker').setStartDate(moment(data.settings.userSettings.queryStartdate).add(1, 'days'));
+          $scope.queryRange.startDate = moment(data.settings.userSettings.queryStartdate);
+          angular.element('#range-selector').data('daterangepicker').setEndDate(moment(data.settings.userSettings.queryEnddate).add(1, 'days'));
+          $scope.queryRange.endDate = moment(data.settings.userSettings.queryEnddate);
+        }
+    });
+
     $scope.menuItems = sidebarService.getMenuItems();
     $scope.menuHeight = $element[0].childNodes[0].clientHeight - 84;
 

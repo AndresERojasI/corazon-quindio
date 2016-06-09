@@ -15,7 +15,8 @@
       scope: {
         isMenuCollapsed: '=',
       },
-      templateUrl: 'app/theme/components/pageTop/pageTop.html'
+      templateUrl: 'app/theme/components/pageTop/pageTop.html',
+      controller: 'PageTopCtrl'
     };
   }
 
