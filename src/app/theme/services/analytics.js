@@ -204,9 +204,9 @@
                                         });
                                     }
 
-                                    $scope.$broadcast('loadChart', {
-                                        dataset: dailyRevenue
-                                    });
+                                    $scope.loadChart(
+                                        {dataset: dailyRevenue}
+                                    );
                                 })
                                 .catch(function(error){
                                     console.log(error);
