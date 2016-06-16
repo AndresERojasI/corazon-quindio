@@ -123,10 +123,6 @@
                         gridAlpha: 0.5,
                         gridColor: layoutColors.border,
                     },
-                    export: {
-                        enabled: true
-                    },
-                    creditsPosition: 'top-right',
                     pathToImages: layoutPaths.images.amChart
                 });
 
