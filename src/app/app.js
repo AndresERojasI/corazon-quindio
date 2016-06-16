@@ -14,15 +14,17 @@ angular.module('ROA', [
   'ngTouch',
   'toastr',
   'smart-table',
-  "xeditable",
+  'xeditable',
   'ui.slimscroll',
   'ngJsTree',
   'angular-progress-button-styles',
   'angular-loading-bar',
   'angularMoment',
   'ngBootstrap',
-  'FredrikSandell.worker-pool',
   'angular-cache',
+  'ngRadialGauge',
+  'nemLogging',
+  'ui-leaflet',
   
   'ROA.theme',
   'ROA.pages',
@@ -53,6 +55,4 @@ angular.module('ROA', [
   });
 
   envServiceProvider.check();
-
-  //cfCryptoHttpInterceptor.base64Key = 'tU#=wylTnbqU)}uJ6{.^vE!.Cks^rfGaZpqy~.r&>VghW:l}QSPBwrdV^G[f{ /x';
 }]);

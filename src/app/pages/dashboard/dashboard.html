@@ -1,7 +1,90 @@
-<div ng-show="!displayContent" class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<h3>No information available yet</h3>
+<div>
+    <!-- Metrics -->
+    <div class="col-lg-3">
+        <div class="col-md-4 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body metrics blue">
+                    <i class="fa fa-line-chart col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        {{ revenue | currency : '&euro;' : 1}}
+                        <p class="small-text">Revenue from TV</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body metrics orange">
+                    <i class="fa fa-user col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        {{ costPerConversion | currency : '&euro;' : 1}}
+                        <p class="small-text">Cost Per Conversion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body metrics turquoise">
+                    <i class="ion-cash col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        {{ roi | currency : '' : 1}}x
+                        <p class="small-text">Return On Investment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Daily Revenue Bar Chart -->
+    <div class="col-lg-6">
+        <div id="barChart" class="admin-chart"></div>
+    </div>
+    <!-- Daily Revenue Bar Chart -->
+    <div class="col-lg-3">
+        <p class="text-center text-upper text-muted">BUDGET EFFICIENCY</p>
+        <div class="h1 text-secondary text-bold text-center green-text">
+            {{ budgetEfficiency | currency : '' : 1}}%
+        </div>
+        <div width="350" class="text-center" ng-radial-gauge ranges="ranges" value="budgetEfficiency" value-unit="unit" transitionMs="2000" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit">
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="xe-widget xe-map-stats">
+                <div class="col-lg-9" id="map-wrapper">
+                    <leaflet defaults="defaults" lf-center="center"></leaflet>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-lg-3" id="map-top-destinations">
+                    <div class="xe-label">
+                        <h3>Top Destinations</h3>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(key, dest) in citiesList">
+                            <div class="xe-map-data">
+                                <span class="label">{{dest.city}}:</span>
+                                <span class="visit_count">{{ dest.visit_count | currency : '' : 0}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="panel panel-default" id="recent_insights_panel">
+                <h2>RECENT INSIGHTS</h2>
+                <div class="panel-body">
+                    <ul style="font-size: 1.3em">
+                        <li class="mt-10 mb-15" ng-repeat="(key, insight) in insights">
+							<p>{{ insight.insight }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div ng-show="displayContent">
-	
-</div>
+<div class="clearfix"></div>

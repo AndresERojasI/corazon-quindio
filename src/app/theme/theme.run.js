@@ -9,10 +9,7 @@
     .run(themeRun);
 
   /** @ngInject */
-  function themeRun($rootScope, layoutSizes, $q, $state, SubdomainService, RestApi, envService, $cookies, WorkerService) {
-
-    // Worker configuration
-    WorkerService.setAngularUrl('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js');
+  function themeRun($rootScope, layoutSizes, $q, $state, SubdomainService, RestApi, envService, $cookies) {
 
     // Let's inject the state to catch it on the index
     $rootScope.$state = $state;

@@ -18,7 +18,7 @@
   var colorScheme = {
     primary: '#209e91',
     info: '#2dacd1',
-    success: '#90b900',
+    success: '#68B828',
     warning: '#dfb81c',
     danger: '#e85656',
   };

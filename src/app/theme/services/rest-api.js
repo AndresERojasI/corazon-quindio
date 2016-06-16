@@ -87,6 +87,19 @@
 				});
 			};
 
+			restApi.getInsights = function(id){
+				return new Promise(function(success, fail){
+					$http({
+					  method: 'GET',
+					  url: endpoint + '/client/'+id+'/insights'
+					}).then(function (response) {
+					    success(response.data);
+					  }, function (response) {
+					  	fail(response.data);
+					  });
+				});
+			};
+
 			return restApi;
 
 		}])
