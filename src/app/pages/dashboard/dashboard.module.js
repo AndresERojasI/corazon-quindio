@@ -127,10 +127,10 @@
                 });
 
                 // listen for the event in the relevant $rootScope
-                $scope.$on('loadChart', function(event, data) {
-                    barChart.dataProvider = data.dataset;
+                $scope.loadChart = function(data) {
+                    barChart.dataProvider = data;
                     barChart.validateData();
-                });
+                };
 
 
                 // listen for the event in the relevant $rootScope

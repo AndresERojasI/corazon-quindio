@@ -203,10 +203,8 @@
                                             color: layoutColors.success
                                         });
                                     }
-                                    console.log(dailyRevenue);
-                                    $scope.loadChart(
-                                        {dataset: dailyRevenue}
-                                    );
+
+                                    $scope.loadChart( dailyRevenue );
                                 })
                                 .catch(function(error){
                                     console.log(error);
