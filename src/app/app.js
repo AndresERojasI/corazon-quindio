@@ -45,7 +45,7 @@ angular.module('ROA', [
   envServiceProvider.config({
     vars: {
       development: {
-        restApiEndpoint: 'http://app2.resultsonair.com:1337/',
+        restApiEndpoint: 'http://app2.resultsonair.com:1337',
         baseAppUrl: 'http://app2.resultsonair.com',
         baseAppLogin: 'http://app2.resultsonair.com/#/login',
         baseAppNoClient: 'http://app2.resultsonair.com/#/noClient'
