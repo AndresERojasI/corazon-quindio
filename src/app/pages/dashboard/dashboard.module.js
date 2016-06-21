@@ -136,7 +136,7 @@
                             gridAlpha: 0.5,
                             gridColor: layoutColors.border,
                         },
-                        pathToImages: layoutPaths.images.amChart
+                        pathToImages: 'assets/img/'
                     });
                 };
             }

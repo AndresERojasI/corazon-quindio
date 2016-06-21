@@ -195,6 +195,8 @@
                         "chartCursor": {}
                     });
 
+                    chart.pathToImages = "assets/img/";
+
                     $scope.name_search_box = '';
 
                     chart.addListener("clickGraphItem", function(event) {
