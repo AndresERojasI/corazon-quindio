@@ -152,6 +152,8 @@
                         }
                     });
 
+                    chart.pathToImages = "assets/img/";
+
                     return chart;
                 };
 
@@ -233,6 +235,8 @@
                         }
                     });
 
+                    chart1.pathToImages = "assets/img/";
+
                     return chart1;
                 };
 
@@ -309,7 +313,8 @@
                             "enabled": true
                         }
                     });
-                    console.log(chart2);
+                    
+                    chart.pathToImages = "assets/img/";
                     return chart2;
                 };
 
