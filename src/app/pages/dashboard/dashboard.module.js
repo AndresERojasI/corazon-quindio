@@ -24,7 +24,18 @@
         })
         .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', 'leafletData',
             function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, leafletData) {
+                if($rootScope.dashboardCalculated || AnalyticsService.informationLoaded){
+                    AnalyticsService.calculateDashboard($scope);
+                }else{
+                    //Intercept the Loaded information action
+                    $rootScope.$on('informationLoaded', function(){
+                        AnalyticsService.calculateDashboard($scope);
+                        $rootScope.dashboardCalculated = true;
+                    });
+                }        
 
+
+                // Leaflet Map configuration
                 L.Icon.Default.imagePath = 'images'
                 L.DomUtil.TRANSITION = true;
                 angular.extend($scope, {
@@ -53,15 +64,16 @@
                     $scope.mapInstance = map;
                 });
 
+                // Variables
                 $scope.citiesList = [];
                 $scope.insights = [];
-                //Starting values at 0
+                
+                // Budget efficiency
                 $scope.revenue = 0;
                 $scope.costPerConversion = 0;
                 $scope.roi = 0;
                 $scope.dailyDataStore = [];
 
-                $scope.budgetEfficiency = 0;
                 $scope.upperLimit = 100;
                 $scope.lowerLimit = 0;
                 $scope.unit = "%";
@@ -80,70 +92,53 @@
                     color: '#8DCA2F'
                 }, ];
 
-
-                // Daily revenue Chart
-                var barChart = AmCharts.makeChart('barChart', {
-                    type: 'serial',
-                    theme: 'blur',
-                    color: layoutColors.defaultText,
-                    export: {
-                        enabled: true,
-                        menu: [{
-                            format: "JPG",
-                            label: "Save as JPG",
-                            title: "Export chart to JPG",
-                        }, "PNG"]
-                    },
-                    dataProvider: $scope.dailyDataStore,
-                    valueAxes: [{
-                        axisAlpha: 0,
-                        position: 'right',
-                        title: 'Revenue (€)',
-                        gridAlpha: 0.5,
-                        gridColor: layoutColors.border,
-                    }],
-                    startDuration: 1,
-                    graphs: [{
-                        balloonText: '<b>[[category]]: &euro;[[value]]</b>',
-                        fillColorsField: 'color',
-                        fillAlphas: 1,
-                        lineAlpha: 0.2,
-                        type: 'column',
-                        valueField: 'revenue'
-                    }],
-                    chartCursor: {
-                        categoryBalloonEnabled: false,
-                        cursorAlpha: 0,
-                        zoomable: true
-                    },
-                    categoryField: 'date',
-                    categoryAxis: {
-                        gridPosition: 'start',
-                        labelRotation: 45,
-                        gridAlpha: 0.5,
-                        gridColor: layoutColors.border,
-                    },
-                    pathToImages: layoutPaths.images.amChart
-                });
-
-                // listen for the event in the relevant $rootScope
+                // Load the daily revenue bar chart component
                 $scope.loadChart = function(data) {
-                    barChart.dataProvider = data;
-                    barChart.validateData();
+                    // Daily revenue Chart
+                    var barChart = AmCharts.makeChart('barChart', {
+                        type: 'serial',
+                        theme: 'blur',
+                        color: layoutColors.defaultText,
+                        export: {
+                            enabled: true,
+                            menu: [{
+                                format: "JPG",
+                                label: "Save as JPG",
+                                title: "Export chart to JPG",
+                            }, "PNG"]
+                        },
+                        dataProvider: data,
+                        valueAxes: [{
+                            axisAlpha: 0,
+                            position: 'right',
+                            title: 'Revenue (€)',
+                            gridAlpha: 0.5,
+                            gridColor: layoutColors.border,
+                        }],
+                        startDuration: 1,
+                        graphs: [{
+                            balloonText: '<b>[[category]]: &euro;[[value]]</b>',
+                            fillColorsField: 'color',
+                            fillAlphas: 1,
+                            lineAlpha: 0.2,
+                            type: 'column',
+                            valueField: 'revenue'
+                        }],
+                        chartCursor: {
+                            categoryBalloonEnabled: false,
+                            cursorAlpha: 0,
+                            zoomable: true
+                        },
+                        categoryField: 'date',
+                        categoryAxis: {
+                            gridPosition: 'start',
+                            labelRotation: 45,
+                            gridAlpha: 0.5,
+                            gridColor: layoutColors.border,
+                        },
+                        pathToImages: layoutPaths.images.amChart
+                    });
                 };
-
-
-                // listen for the event in the relevant $rootScope
-                $rootScope.$on('informationLoaded', function(event, data) {
-                    AnalyticsService.calculateDashboard($scope)
-                        .then(function(result) {
-
-                        })
-                        .catch(function(error) {
-                            console.log('Error');
-                            console.log(error);
-                        });
-                });
             }
         ]);
 

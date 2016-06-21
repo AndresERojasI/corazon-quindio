@@ -244,6 +244,10 @@ a.forgot-pass {
   background-color: #04b486 !important;
 }
 
+.white{
+  background-color: #fff !important;
+}
+
 .purple {
     background-color: #9c27b0 !important;
 }
@@ -416,4 +420,87 @@ a.forgot-pass {
 
 #map-top-destinations .visit_count{
   color: #fff;
+}
+
+button:active{
+  background-color: #209e91 !important;
+  border-color: #d6d6d6 !important;
+  color: #fff;
+}
+
+.circle{
+  border-radius: 50%;
+}
+
+.active{
+    background-color: #209e91 !important;
+    border-color: #d6d6d6 !important;
+    color: #fff !important;
+  }
+
+/**
+ * Performance page styles
+ */
+#performance_page{
+
+  #filters-bar{
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .admin-chart{
+    height: 500px !important;
+  }
+
+  //Form styles
+  .form-control, .form-control:focus{
+    background-color: #d9dbdc !important;
+    color: #444444 !important;
+  }
+
+  
+
+  .count_row{
+    background-color: #ccc;
+
+    th{
+      font-weight: bold !important;
+      text-align: center;
+    }
+  }
+
+  .metrics_performance{
+    padding: 20px;
+
+    i{
+      color: #fff;
+      height: 53px;
+      text-align: center;
+      line-height: 53px;
+      font-size: 24px;
+    }
+
+    div{
+      font-weight: 400;
+      color: #3e3f3f;
+      font-size: 2.15em;
+      line-height: 36px;
+
+      p.small-text{
+        line-height: 11px;
+        margin-top: 0px;
+      }
+    }
+
+
+  }
+}
+
+/**
+ * Performance page styles
+ */
+#trends_page{
+  .admin-chart{
+    height: 250px !important;
+  }
 }

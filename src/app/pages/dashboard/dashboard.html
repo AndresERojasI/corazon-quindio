@@ -1,4 +1,4 @@
-<div>
+<div id="dashbaord_page">
     <!-- Metrics -->
     <div class="col-lg-3">
         <div class="col-md-4 col-lg-12">
@@ -39,13 +39,15 @@
     <div class="col-lg-6">
         <div id="barChart" class="admin-chart"></div>
     </div>
-    <!-- Daily Revenue Bar Chart -->
+    <!-- Budget Efficiency Gauge -->
     <div class="col-lg-3">
         <p class="text-center text-upper text-muted">BUDGET EFFICIENCY</p>
         <div class="h1 text-secondary text-bold text-center green-text">
             {{ budgetEfficiency | currency : '' : 1}}%
         </div>
-        <div width="350" class="text-center" ng-radial-gauge ranges="ranges" value="budgetEfficiency" value-unit="unit" transitionMs="2000" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit">
+        <div ng-if="budgetEfficiency">
+	        <div width="100%" class="text-center" ng-radial-gauge ranges="ranges" value="budgetEfficiency" value-unit="unit" transitionMs="2000" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit">
+	        </div>
         </div>
     </div>
     <div class="clearfix">
