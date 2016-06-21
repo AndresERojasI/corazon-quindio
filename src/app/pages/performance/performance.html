@@ -1,0 +1,145 @@
+<div id="performance_page">
+    <div id="filters-bar" class="col-lg-12 white clearfix">
+        <div class="col-lg-7 col-md-9">
+            <div class="btn-group col-lg-8" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'network'}" ng-click="setFirstFilter('network')">
+                    Network
+                </button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'channel'}" ng-click="setFirstFilter('channel')">
+                    Channel
+                </button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'creative'}" ng-click="setFirstFilter('creative')">
+                    Creative
+                </button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'weekday'}" ng-click="setFirstFilter('weekday')">
+                    Weekday
+                </button>
+            </div>
+            <div class="dropdown col-lg-3">
+                <button class="btn btn-default btn-lg dropdown-toggle btn-raised" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {{ second_filter.title }}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-click="setSecondFilter({title: 'Combine With', filter: false})">Combine with</li>
+                    <li>-----</li>
+                    <li ng-click="setSecondFilter({title: 'Month', filter:'month'})">Month</li>
+                    <li ng-click="setSecondFilter({title: 'Week', filter:'week'})">Week</li>
+                    <li ng-click="setSecondFilter({title: 'weekday', filter:'weekday'})" ng-if="first_filter != 'weekday'">Weekday</li>
+                    <li ng-click="setSecondFilter({title: 'Daypart', filter:'daypart'})">Daypart</li>
+                    <li ng-click="setSecondFilter({title: 'Country', filter:'country'})">Country</li>
+                    <li ng-click="setSecondFilter({title: 'Region', filter:'region'})">Region</li>
+                    <li ng-click="setSecondFilter({title: 'City', filter:'city'})">City</li>
+                    <li ng-click="setSecondFilter({title: 'Medium', filter:'medium'})">Medium</li>
+                    <li ng-click="setSecondFilter({title: 'Device', filter:'device'})">Device</li>
+                    <li ng-click="setSecondFilter({title: 'Network', filter:'network'})" ng-if="first_filter != 'network'">Network</li>
+                    <li ng-click="setSecondFilter({title: 'Channel', filter:'channel'})" ng-if="first_filter != 'channel'">Channel</li>
+                    <li ng-click="setSecondFilter({title: 'Creative', filter:'creative'})" ng-if="first_filter != 'creative'">Creative</li>
+                    <li ng-click="setSecondFilter({title: 'Program', filter:'program'})">Program</li>
+                    <li ng-click="setSecondFilter({title: 'Place in break', filter:'place_in_break'})">Place in break</li>
+                    <li ng-click="setSecondFilter({title: 'Center vs end', filter:'center_vs_end'})">Center vs end</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-5 pull-right">
+            <div class="btn-group col-lg-12" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': third_filter == 'users'}" ng-click="setThirdFilter('users')">Returning Visitors</button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': third_filter == 'new_users'}" ng-click="setThirdFilter('new_users')">New Visitors</button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': third_filter == 'conversions'}" ng-click="setThirdFilter('conversions')">Conversions</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h4>Performance Overview</h4>
+        <div id="bubble-chart" class="admin-chart white"></div>
+        <br>
+        <div class="clearfix"></div>
+        <br>
+        <div class="col-lg-4 white metrics_performance">
+            <i class="fa fa-user col-lg-3 col-md-3 col-sm-3 col-xs-3 circle purple" aria-hidden="true"></i>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                {{ cost_per_user | currency : '€' : 1}}
+                <p class="small-text">Cost Per Returning Visitor</p>
+            </div>
+        </div>
+        <div class="col-lg-4 white metrics_performance">
+            <i class="fa fa-users col-lg-3 col-md-3 col-sm-3 col-xs-3 circle blue" aria-hidden="true"></i>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                {{ cost_per_new_user | currency : '€' : 1}}
+                <p class="small-text">Cost Per New Visitor</p>
+            </div>
+        </div>
+        <div class="col-lg-4 white metrics_performance">
+            <i class="fa fa-user-plus col-lg-3 col-md-3 col-sm-3 col-xs-3 circle orange" aria-hidden="true"></i>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                {{ cost_per_conversion | currency : '€' : 1}}
+                <p class="small-text">Cost Per Conversion</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="horizontal-scroll">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>
+                        <h4>Performance in detail</h4>
+                    </p>
+                </div>
+                <div class="form-group col-lg-5 pull-right">
+                    <label class="col-lg-5 pull-right">Display
+                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Columns
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li ng-repeat="(column_id, column_data) in tableColumns">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" ng-checked="column_data.enabled" value="{{ column_id }}" ng-click="displayColumn(column_id)">
+                                    <span>{{ column_data.title }}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </label>
+                    <label class="col-lg-5 pull-right">Rows per page
+                        <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25]">
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <table class="table table-responsive" st-table="smartTableData" st-safe-src="resultCollection" ng-if="tableLoaded">
+                <thead>
+                    <tr class="count_row">
+                        <th ng-repeat="(column_id, column_data) in tableColumns" ng-show="column_data.enabled">{{ column_data.count }}</th>
+                    </tr>
+                    <tr class="sortable ">
+                        <th ng-repeat="(column_id, column_data) in tableColumns" st-sort="column_id" st-sort-default="true" ng-show="column_data.enabled">{{ column_data.title }}</th>
+                    </tr>
+                    <tr>
+                        <th ng-repeat="(column_id, column_data) in tableColumns" ng-show="column_data.enabled">
+                            <input id="{{ column_id }}_search_box" st-delay="100" st-search="{{ column_id }}" placeholder="Search {{column_data.title}}" class="input-sm form-control search-input" type="search" ng-if="column_data.searchable" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in smartTableData">
+                        <td ng-show="tableColumns.name.enabled">{{ item.name }}</td>
+                        <td ng-show="tableColumns.ads.enabled">{{ item.ads | currency : '' : 2}}</td>
+                        <td ng-show="tableColumns.budget.enabled">{{ item.budget | currency : '€' : 2}}</td>
+                        <td ng-show="tableColumns.roi.enabled">{{ item.roi | currency : '€' : 2}}</td>
+                        <td ng-show="tableColumns.revenue.enabled">{{ item.revenue | currency : '€' : 2}}</td>
+                        <td ng-show="tableColumns.users.enabled">{{ item.users | currency : '' : 2}}</td>
+                        <td ng-show="tableColumns.new_users.enabled">{{ item.new_users | currency : '' : 2}}</td>
+                        <td ng-show="tableColumns.conversions.enabled">{{ item.conversions | currency : '' : 2}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="5"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

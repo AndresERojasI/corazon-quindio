@@ -1,0 +1,32 @@
+<div id="trends_page">
+    <div id="filters-bar" class="col-lg-3 white clearfix pull-right">
+        <div class="col-lg-12">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'hour'}" ng-click="setFirstFilter('hour')">
+                    Hour
+                </button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'day'}" ng-click="setFirstFilter('day')">
+                    Day
+                </button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'week'}" ng-click="setFirstFilter('week')">
+                    Week
+                </button>
+                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'month'}" ng-click="setFirstFilter('month')">
+                    Month
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-lg-3">
+        boxes
+    </div>
+    <div class="col-lg-9">
+        <div id="chartdiv" class="admin-chart white"></div>
+        <div class="clearfix"></div>
+        <div id="chartdiv2" class="admin-chart white"></div>
+        <div class="clearfix"></div>
+        <div id="chartdiv3" class="admin-chart white"></div>
+        <div class="clearfix"></div>
+    </div>
+</div>
