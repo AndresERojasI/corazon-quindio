@@ -27,37 +27,51 @@
 
                 // First filter
                 $scope.first_filter = 'hour';
+                $scope.categoryField = $scope.first_filter;
+                $scope.dateFormat = 'H';
+                $scope.parseDate = false;
                 $scope.setFirstFilter = function(newFilter) {
+                    $scope.trendsResult = undefined;
 
                     $scope.first_filter = newFilter;
+                    $scope.categoryField = $scope.first_filter;
+                    switch (newFilter) {
+                        case 'hour':
+                            $scope.dateFormat = 'H';
+                            $scope.parseDate = false;
+                            break;
+                        case 'day':
+                            $scope.dateFormat = null;
+                            $scope.parseDate = false;
+                            break;
+                        case 'week':
+                            $scope.dateFormat = null;
+                            $scope.parseDate = false;
+                            break;
+                        case 'month':
+                            $scope.categoryField = 'visit_time';
+                            $scope.dateFormat = 'MMMM';
+                            $scope.parseDate = true;
+                            break;
+                    }
+
+                    $scope.zoomFilterStart = undefined;
+                    $scope.zoomFilterEnd = undefined;
+
                     AnalyticsService.calculateTrends($scope);
 
                 };
 
                 // Second filter
                 $scope.second_filter = {
-                    title: 'Select Option',
-                    filter: false
+                    title: 'Returning Visitors',
+                    filter: 'users',
+                    total: 'total'
                 };
                 $scope.setSecondFilter = function(newFilter) {
 
-                    $scope.second_filter = {
-                        title: 'Combine With',
-                        filter: false
-                    };
-                    if ($scope.first_filter !== $scope.second_filter.filter) {
-                        $scope.second_filter = newFilter;
-                    }
-
-                    AnalyticsService.calculateTrends($scope);
-                };
-
-                // Third filter
-                $scope.third_filter = 'users';
-                $scope.setThirdFilter = function(newFilter) {
-                    $scope.third_filter = newFilter;
-
-                    AnalyticsService.calculateTrends($scope);
+                    $scope.second_filter = newFilter;
+                    AnalyticsService.calculateTrendsTable($scope);
                 };
 
                 if ($rootScope.trendsCalculated || AnalyticsService.informationLoaded) {
@@ -70,20 +84,13 @@
                     });
                 }
 
+                // Users, new users, conversions chart
                 $scope.createUsersChart = function(data) {
-                    var chart = AmCharts.makeChart("chartdiv", {
+                    $scope.chart = AmCharts.makeChart("chartdiv", {
                         "type": "serial",
-                        "theme": "none",
-                        "marginRight": 80,
-                        "autoMarginOffset": 20,
-                        "marginTop": 7,
-                        "dataProvider": data,
-                        "mouseWheelZoomEnabled": true,
-                        "valueAxes": [{
-                            "axisAlpha": 0.2,
-                            "dashLength": 1,
-                            "position": "left"
-                        }],
+                        "theme": "light",
+                        "marginLeft": 70,
+                        "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "returning_visitors",
                             "balloonText": "Returning visitors: [[value]]",
@@ -131,46 +138,47 @@
                             }
                         }],
                         "chartScrollbar": {
-                            "autoGridCount": true,
-                            "graph": "g1",
-                            "scrollbarHeight": 40
+                            scrollbarHeight: 10
+                        },
+                        "categoryField": $scope.categoryField,
+                        "categoryAxis": {
+                            "parseDates": $scope.parseDate,
+                            "dashLength": 1,
+                            "minorGridEnabled": true
+                        },
+                        "valueAxes": [{
+                            "ignoreAxisWidth": true
+                        }],
+                        "dataProvider": data,
+                        "balloon": {
+                            "borderThickness": 1,
+                            "shadowAlpha": 0
                         },
                         "chartCursor": {
-                            "categoryBalloonEnabled": true
+                            "valueLineEnabled": false,
+                            "valueLineBalloonEnabled": true,
+                            "cursorAlpha": 1,
+                            "valueLineAlpha": 0.2
                         },
-                        "categoryField": "month",
-                        "categoryAxis": {
-                            "parseDates": false,
-                            "axisColor": "#DADADA",
-                            "dashLength": 1,
-                            "minorGridEnabled": true,
-                            "labelsEnabled": true,
-                            "tickLength": 0
-                        },
-                        "export": {
-                            "enabled": true
+                        "autoMarginOffset": 10,
+                        "valueScrollbar": {
+                            "oppositeAxis": false,
+                            "offset": 50,
+                            "scrollbarHeight": 10
                         }
                     });
 
-                    chart.pathToImages = "assets/img/";
-
-                    return chart;
+                    return $scope.chart;
                 };
 
+                // CPC, CPU, CPN chart
                 $scope.createCostsChart = function(data) {
-                    var chart1 = AmCharts.makeChart("chartdiv2", {
+                    $scope.chart1 = AmCharts.makeChart("chartdiv2", {
                         "type": "serial",
-                        "theme": "none",
-                        "marginRight": 80,
-                        "autoMarginOffset": 20,
-                        "marginTop": 3,
-                        "dataProvider": data,
-                        "valueAxes": [{
-                            "axisAlpha": 0.2,
-                            "dashLength": 1,
-                            "position": "left"
-                        }],
-                        "mouseWheelZoomEnabled": true,
+                        "theme": "light",
+                        "marginLeft": 70,
+                        "pathToImages": "http://www.amcharts.com/lib/3/images/",
+                        "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "cpu",
                             "balloonText": "Cost per User: [[value]]",
@@ -218,42 +226,46 @@
                                 "drop": true
                             }
                         }],
-                        "chartCursor": {
-                            "categoryBalloonEnabled": true
-                        },
-                        "categoryField": "month",
+                        "categoryField": $scope.categoryField,
                         "categoryAxis": {
-                            "parseDates": false,
-                            "axisColor": "#DADADA",
+                            "parseDates": $scope.parseDate,
                             "dashLength": 1,
-                            "minorGridEnabled": true,
-                            "labelsEnabled": false,
-                            "tickLength": 0
+                            "minorGridEnabled": true
                         },
-                        "export": {
-                            "enabled": true
+                        "valueAxes": [{
+                            "ignoreAxisWidth": true
+                        }],
+                        "dataProvider": data,
+                        "balloon": {
+                            "borderThickness": 1,
+                            "shadowAlpha": 0
+                        },
+                        "chartCursor": {
+                            "valueLineEnabled": false,
+                            "valueLineBalloonEnabled": true,
+                            "cursorAlpha": 1,
+                            "valueLineAlpha": 0.2
+                        },
+                        "autoMarginOffset": 10,
+                        "valueScrollbar": {
+                            "oppositeAxis": false,
+                            "offset": 50,
+                            "scrollbarHeight": 10
                         }
+
                     });
 
-                    chart1.pathToImages = "assets/img/";
-
-                    return chart1;
+                    return $scope.chart1;
                 };
 
+                // Ads, budget, revenue chart
                 $scope.createTotalsChart = function(data) {
-                    var chart2 = AmCharts.makeChart("chartdiv3", {
+                    $scope.chart2 = AmCharts.makeChart("chartdiv3", {
                         "type": "serial",
-                        "theme": "none",
-                        "marginRight": 80,
-                        "autoMarginOffset": 20,
-                        "marginTop": 3,
-                        "dataProvider": data,
-                        "valueAxes": [{
-                            "axisAlpha": 0.2,
-                            "dashLength": 1,
-                            "position": "left"
-                        }],
-                        "mouseWheelZoomEnabled": true,
+                        "theme": "light",
+                        "marginLeft": 70,
+                        "pathToImages": "http://www.amcharts.com/lib/3/images/",
+                        "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "ads",
                             "balloonText": "ADS: [[value]]",
@@ -267,7 +279,8 @@
                             "useLineColorForBulletBorder": true,
                             "balloon": {
                                 "drop": true
-                            }
+                            },
+                            "lineColor": '#28aef3'
                         }, {
                             "id": "budget",
                             "balloonText": "budget: [[value]]",
@@ -281,7 +294,8 @@
                             "useLineColorForBulletBorder": true,
                             "balloon": {
                                 "drop": true
-                            }
+                            },
+                            "lineColor": '#2e81ad'
                         }, {
                             "id": "revenue",
                             "balloonText": "Revenue: [[value]]",
@@ -295,71 +309,72 @@
                             "useLineColorForBulletBorder": true,
                             "balloon": {
                                 "drop": true
-                            }
+                            },
+                            "lineColor": '#144158'
                         }],
-                        "chartCursor": {
-                            "categoryBalloonEnabled": true
-                        },
-                        "categoryField": "month",
+                        "categoryField": $scope.categoryField,
                         "categoryAxis": {
-                            "parseDates": false,
-                            "axisColor": "#DADADA",
+                            "parseDates": $scope.parseDate,
                             "dashLength": 1,
-                            "minorGridEnabled": true,
-                            "labelsEnabled": false,
-                            "tickLength": 0
+                            "minorGridEnabled": true
                         },
-                        "export": {
-                            "enabled": true
+                        "valueAxes": [{
+                            "ignoreAxisWidth": true
+                        }],
+                        "dataProvider": data,
+                        "balloon": {
+                            "borderThickness": 1,
+                            "shadowAlpha": 0
+                        },
+                        "chartCursor": {
+                            "valueLineEnabled": false,
+                            "valueLineBalloonEnabled": true,
+                            "cursorAlpha": 1,
+                            "valueLineAlpha": 0.2
+                        },
+                        "autoMarginOffset": 10,
+                        "valueScrollbar": {
+                            "oppositeAxis": false,
+                            "offset": 50,
+                            "scrollbarHeight": 10
                         }
                     });
-                    
-                    chart.pathToImages = "assets/img/";
-                    return chart2;
+                    return $scope.chart2;
                 };
 
+                // Sync the 3 charts zoom
                 $scope.syncCharts = function(charts) {
                     for (var x in charts) {
-                        charts[x].addListener("zoomed", function syncZoom(event) {
-                            for (x in charts) {
+                        charts[x].addListener("zoomed", function (event) {
+                            for (var x in charts) {
                                 if (charts[x].ignoreZoom) {
                                     charts[x].ignoreZoom = false;
                                 }
                                 if (event.chart != charts[x]) {
                                     charts[x].ignoreZoom = true;
-                                    charts[x].zoomToDates(event.startDate, event.endDate);
+                                    charts[x].zoomToCategoryValues(event.startValue, event.endValue);
                                 }
                             }
-                        });
 
-                        charts[x].addListener("init", function(event) {
-                            event.chart.chartCursor.addListener("changed", function(event) {
-                                for (var x in charts) {
-                                    if (event.chart != charts[x]) {
-                                        if (event.position) {
-                                            console.log(event.position);
-                                            charts[x].chartCursor.isZooming(event.target.zooming);
-                                            charts[x].chartCursor.selectionPosX = event.target.selectionPosX;
-                                            charts[x].chartCursor.forceShow = true;
-                                            charts[x].chartCursor.setPosition(event.position, false, event.target.index);
-                                        }
-                                    }
-                                }
-                            });
+                            $scope.zoomFilterStart = event.startValue;
+                            $scope.zoomFilterEnd = event.endValue;
+                            AnalyticsService.calculateTrendsTotals($scope);
 
-                            event.chart.chartCursor.addListener("onHideCursor", function() {
-                                for (var x in charts) {
-                                    if (charts[x].chartCursor.hideCursor) {
-                                        charts[x].chartCursor.forceShow = false;
-                                        charts[x].chartCursor.hideCursor(false);
-                                    }
-                                }
-                            });
                         });
                     }
                 }
 
+                /**
+                 * Table logic
+                 */
+                $scope.total_column_title = 'Total';
+                $scope.resultCollection = [];
+
             }
         ]);
+
+
+
+
 
 })();

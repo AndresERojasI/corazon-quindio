@@ -168,7 +168,7 @@
                             //"minMaxMultiplier": 1.2,
                             "axisAlpha": 0,
                             "position": "left",
-                            "unit": "$",
+                            "unit": "€",
                             "title": "Avg Cost per Conversion",
                             "titleColor" : "#666666"
                         }],
