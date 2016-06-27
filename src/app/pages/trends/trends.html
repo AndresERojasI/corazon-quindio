@@ -1,32 +1,169 @@
 <div id="trends_page">
-    <div id="filters-bar" class="col-lg-3 white clearfix pull-right">
-        <div class="col-lg-12">
+    <div id="filters-bar" class="col-lg-12 white clearfix ">
+        <div class="pull-right">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'hour'}" ng-click="setFirstFilter('hour')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'hour'}" ng-click="setFirstFilter('hour')">
                     Hour
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'day'}" ng-click="setFirstFilter('day')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'day'}" ng-click="setFirstFilter('day')">
                     Day
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'week'}" ng-click="setFirstFilter('week')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'week'}" ng-click="setFirstFilter('week')">
                     Week
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'month'}" ng-click="setFirstFilter('month')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'month'}" ng-click="setFirstFilter('month')">
                     Month
                 </button>
             </div>
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-lg-3">
-        boxes
+    <br>
+    <div class="col-lg-12">
+        <div class="col-lg-4">
+            <div class="col-lg-12 performance_metrics lemon-green">
+                <div class="label col-lg-5 col-md-3 col-sm-5 col-xs-5"><span>Returning Visitors</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa fa-user"></i></div>
+                <strong>
+                    {{ returning_visitors | currency : '' : 0}}
+                </strong>
+            </div>
+            <div class="col-lg-12 green performance_metrics">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>New Visitors</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-users"></i></div>
+                <strong>
+                    {{ new_visitors | currency : '' : 0}}
+                </strong>
+            </div>
+            <div class="col-lg-12 olive-green performance_metrics">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Conversions</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-heart"></i></div>
+                <strong>
+                    {{ conversions | currency : '' : 0}}
+                </strong>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="chartdiv" class="admin-chart white"></div>
+        </div>
+        <div class="clearfix"></div>
+        <br>
+        <div class="col-lg-4">
+            <div class="col-lg-12 performance_metrics pink">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>COST PER RETURNING VISITOR</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
+                <strong>
+                    {{ cpu | currency : '€' : 2}}
+                </strong>
+            </div>
+            <div class="col-lg-12 pink-salmon performance_metrics">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>COST PER NEW VISITOR</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
+                <strong>
+                    {{ cpnu | currency : '€' : 2}}
+                </strong>
+            </div>
+            <div class="col-lg-12 red performance_metrics">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>COST PER CONVERSION</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
+                <strong>
+                    {{ cpc | currency : '€' : 2}}
+                </strong>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="chartdiv2" class="admin-chart white"></div>
+        </div>
+        <div class="clearfix"></div>
+        <br>
+        <div class="col-lg-4">
+            <div class="col-lg-12 performance_metrics clear-blue">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Ads</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-video-camera"></i></div>
+                <strong>
+                    {{ ads | currency : '€' : 2}}
+                </strong>
+            </div>
+            <div class="col-lg-12 blue performance_metrics">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Budget</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-money"></i></div>
+                <strong>
+                    {{ budget | currency : '€' : 2}}
+                </strong>
+            </div>
+            <div class="col-lg-12 dark-blue performance_metrics">
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Revenue</span></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-line-chart"></i></div>
+                <strong>
+                    {{ revenue | currency : '€' : 2}}
+                </strong>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="chartdiv3" class="admin-chart white"></div>
+        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="col-lg-9">
-        <div id="chartdiv" class="admin-chart white"></div>
-        <div class="clearfix"></div>
-        <div id="chartdiv2" class="admin-chart white"></div>
-        <div class="clearfix"></div>
-        <div id="chartdiv3" class="admin-chart white"></div>
+    <div class="clearfix"></div>
+    <br>
+    <br>
+    <div class="col-lg-12 white clearfix">
+        <div class="dropdown pull-right">
+            <button class="btn btn-default btn-md dropdown-toggle btn-raised" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{ second_filter.title }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-click="setSecondFilter({title: 'Select Option', filter: false})">Select Option</li>
+                <li>-----</li>
+                <li ng-click="setSecondFilter({title: 'Returning Visitors', filter:'users'})">Returning Visitors</li>
+                <li ng-click="setSecondFilter({title: 'New Visitors', filter:'new_users'})">New Visitors</li>
+                <li ng-click="setSecondFilter({title: 'Conversions', filter:'conversions'})">Conversions</li>
+                <li ng-click="setSecondFilter({title: 'Cost per Returning Visitor', filter:'cpu'})">Cost per Returning Visitor</li>
+                <li ng-click="setSecondFilter({title: 'Cost per New Visitor', filter:'cpnu'})">Cost per New Visitor</li>
+                <li ng-click="setSecondFilter({title: 'Cost per Conversion', filter:'cpc'})">Cost per Conversion</li>
+                <li ng-click="setSecondFilter({title: 'Ads', filter:'ads'})">Ads</li>
+                <li ng-click="setSecondFilter({title: 'Revenue', filter:'revenue'})">Revenue</li>
+                <li ng-click="setSecondFilter({title: 'Budget', filter:'budget'})">Budget</li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 white">
+        <table class="table table-condensed table-striped table-responsive" st-table="trends_table" st-safe-src="resultCollection" >
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                    <th>{{ total_column_title }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(row_id, row) in resultCollection">
+                    <td class="table-id">{{row_id}}</td>
+                    <td ng-repeat="(col_id, column) in row">
+                        {{ column[second_filter.filter] || 0 }}
+                    </td>
+                    <td>{{ total_daypart[row_id][second_filter.filter + '_total'] || 0 }}</td>
+                </tr>
+                <tr>
+                    <td class="table-id">total</td>
+                    <td ng-repeat="(row_id, row) in resultCollection['Breakfast']">{{ total_weekday[row_id][second_filter.filter + '_total'] }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
         <div class="clearfix"></div>
     </div>
+    <div class="clearfix"></div>
 </div>
+<div class="clearfix"></div>
