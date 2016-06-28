@@ -114,6 +114,7 @@
                         "theme": "light",
                         "categoryField": "name",
                         "rotate": true,
+                        "pathToImages": "assets/img/",
                         "startDuration": 1,
                         "categoryAxis": {
                             "gridPosition": "start",

@@ -90,6 +90,7 @@
                         "type": "serial",
                         "theme": "light",
                         "marginLeft": 70,
+                        "pathToImages": "assets/img/",
                         "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "returning_visitors",
@@ -177,7 +178,7 @@
                         "type": "serial",
                         "theme": "light",
                         "marginLeft": 70,
-                        "pathToImages": "http://www.amcharts.com/lib/3/images/",
+                        "pathToImages": "assets/img/",
                         "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "cpu",
@@ -264,7 +265,7 @@
                         "type": "serial",
                         "theme": "light",
                         "marginLeft": 70,
-                        "pathToImages": "http://www.amcharts.com/lib/3/images/",
+                        "pathToImages": "assets/img/",
                         "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "ads",

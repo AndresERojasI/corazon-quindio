@@ -160,6 +160,7 @@
                         "balloon": {
                             "fixedPosition": false,
                         },
+                        "pathToImages": "assets/img/",
                         "dataProvider": data,
                         "valueAxes": [{
                             "position": "bottom",
