@@ -227,14 +227,16 @@ a.forgot-pass {
                 display: inline-block;
 
                 a {
+                    background-color: transparent !important;
                     color: #979898;
                     font-size: 16px;
                     padding: 15px 23px;
                 }
 
                 a:hover, .active {
+                    
                     color: #fff;
-                    border-bottom: 3px solid #2E81AD;
+                    border-bottom: none;
                 }
             }
         }

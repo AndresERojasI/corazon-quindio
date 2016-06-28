@@ -7,7 +7,7 @@
   <nav class="col-lg-6 col-md-7 col-sm-9 hidden-xs">
     <ul>
       <li ng-repeat="(key, menuitem) in menu">
-        <a href="{{ menuitem.root }}">{{ menuitem.title }}</a>
+        <a href="{{ menuitem.root }}" ng-class="{ 'active': menuitem.active}">{{ menuitem.title }}</a>
       </li>
     </ul>
   </nav>
