@@ -24,15 +24,22 @@
         })
         .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', 'leafletData',
             function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, leafletData) {
-                if($rootScope.dashboardCalculated || AnalyticsService.informationLoaded){
+                $scope.scrollbarConfig = {
+                    autoHideScrollbar: false,
+                    theme: 'light',
+                    scrollInertia: 400,
+                    axis: 'y'
+                }
+
+                if ($rootScope.dashboardCalculated || AnalyticsService.informationLoaded) {
                     AnalyticsService.calculateDashboard($scope);
-                }else{
+                } else {
                     //Intercept the Loaded information action
-                    $rootScope.$on('informationLoaded', function(){
+                    $rootScope.$on('informationLoaded', function() {
                         AnalyticsService.calculateDashboard($scope);
                         $rootScope.dashboardCalculated = true;
                     });
-                }        
+                }
 
 
                 // Leaflet Map configuration
@@ -67,7 +74,7 @@
                 // Variables
                 $scope.citiesList = [];
                 $scope.insights = [];
-                
+
                 // Budget efficiency
                 $scope.revenue = 0;
                 $scope.costPerConversion = 0;
