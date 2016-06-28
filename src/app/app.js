@@ -26,7 +26,7 @@ angular.module('ROA', [
   'nemLogging',
   'ui-leaflet',
   'ngScrollbars',
-  
+  'rt.resize',
   'ROA.theme',
   'ROA.pages',
 

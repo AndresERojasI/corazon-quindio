@@ -22,8 +22,8 @@
                     }
                 });
         })
-        .controller('RoiCtrl', ['$rootScope', '$scope', 'AnalyticsService',
-            function($rootScope, $scope, AnalyticsService) {
+        .controller('RoiCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'resize',
+            function($rootScope, $scope, AnalyticsService, resize) {
 
                 // First filter
                 $scope.first_filter = 'network';
@@ -58,6 +58,10 @@
 
                     AnalyticsService.calculateRoi($scope);
                 };
+
+                resize($scope).call(function () {
+                    AnalyticsService.calculateRoi($scope);
+                });
 
                 // Third filter
                 $scope.third_filter = 'users';

@@ -73,7 +73,8 @@
     "angular-simple-logger": "^0.1.7",
     "ui-leaflet": "^1.0.1",
     "angularD3": "^0.1.1",
-    "ng-scrollbars": "^0.0.10"
+    "ng-scrollbars": "^0.0.10",
+    "angular-resize": "^1.0.0"
   },
   "overrides": {
     "amcharts": {
