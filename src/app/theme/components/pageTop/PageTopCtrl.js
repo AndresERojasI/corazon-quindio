@@ -9,7 +9,8 @@
       .controller('PageTopCtrl', PageTopCtrl);
 
   /** @ngInject */
-  function PageTopCtrl($scope) {
-
+  function PageTopCtrl($scope, sidebarService) {
+  	$scope.menu = sidebarService.getMenuItems();
+  	console.log($scope.menu);
   }
 })();

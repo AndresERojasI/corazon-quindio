@@ -1,22 +1,22 @@
 <div id="performance_page">
     <div id="filters-bar" class="col-lg-12 white clearfix">
-        <div class="col-lg-7 col-md-9">
-            <div class="btn-group col-lg-8" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'network'}" ng-click="setFirstFilter('network')">
+        <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'network'}" ng-click="setFirstFilter('network')">
                     Network
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'channel'}" ng-click="setFirstFilter('channel')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'channel'}" ng-click="setFirstFilter('channel')">
                     Channel
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'creative'}" ng-click="setFirstFilter('creative')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'creative'}" ng-click="setFirstFilter('creative')">
                     Creative
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': first_filter == 'weekday'}" ng-click="setFirstFilter('weekday')">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': first_filter == 'weekday'}" ng-click="setFirstFilter('weekday')">
                     Weekday
                 </button>
             </div>
-            <div class="dropdown col-lg-3">
-                <button class="btn btn-default btn-lg dropdown-toggle btn-raised" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <div class="dropdown pull-right">
+                <button class="btn btn-default btn-md dropdown-toggle btn-raised" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     {{ second_filter.title }}
                     <span class="caret"></span>
                 </button>
@@ -41,11 +41,11 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-5 pull-right">
-            <div class="btn-group col-lg-12" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': third_filter == 'users'}" ng-click="setThirdFilter('users')">Returning Visitors</button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': third_filter == 'new_users'}" ng-click="setThirdFilter('new_users')">New Visitors</button>
-                <button type="button" class="btn btn-default btn-lg btn-raised" ng-class="{'active': third_filter == 'conversions'}" ng-click="setThirdFilter('conversions')">Conversions</button>
+        <div class="pull-right col-xs-12 col-sm-6 col-md-5">
+            <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': third_filter == 'users'}" ng-click="setThirdFilter('users')">Returning Visitors</button>
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': third_filter == 'new_users'}" ng-click="setThirdFilter('new_users')">New Visitors</button>
+                <button type="button" class="btn btn-default btn-md btn-raised" ng-class="{'active': third_filter == 'conversions'}" ng-click="setThirdFilter('conversions')">Conversions</button>
             </div>
         </div>
     </div>
@@ -55,27 +55,32 @@
         <br>
         <div class="clearfix"></div>
         <br>
-        <div class="col-lg-4 white metrics_performance">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 white metrics_performance">
             <i class="fa fa-user col-lg-3 col-md-3 col-sm-3 col-xs-3 circle purple" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                 {{ cost_per_user | currency : '€' : 1}}
                 <p class="small-text">Cost Per Returning Visitor</p>
             </div>
         </div>
-        <div class="col-lg-4 white metrics_performance">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 white metrics_performance">
             <i class="fa fa-users col-lg-3 col-md-3 col-sm-3 col-xs-3 circle blue" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                 {{ cost_per_new_user | currency : '€' : 1}}
                 <p class="small-text">Cost Per New Visitor</p>
             </div>
         </div>
-        <div class="col-lg-4 white metrics_performance">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 white metrics_performance">
             <i class="fa fa-user-plus col-lg-3 col-md-3 col-sm-3 col-xs-3 circle orange" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                 {{ cost_per_conversion | currency : '€' : 1}}
                 <p class="small-text">Cost Per Conversion</p>
             </div>
         </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="visible-md-block visible-sm-block visible-xs-block clearfix">
+        <br>
+        <br>
     </div>
     <div class="col-lg-6">
         <div class="horizontal-scroll">

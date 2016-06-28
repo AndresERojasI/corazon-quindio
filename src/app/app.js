@@ -25,6 +25,7 @@ angular.module('ROA', [
   'ngRadialGauge',
   'nemLogging',
   'ui-leaflet',
+  'ngScrollbars',
   
   'ROA.theme',
   'ROA.pages',

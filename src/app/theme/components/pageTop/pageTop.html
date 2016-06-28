@@ -2,7 +2,16 @@
   <!-- Logo -->
   <a href="#/dashboard" class="al-logo clearfix"><img src="assets/img/logo-black-bg.png" alt="ResultsOnAir"></a>
   <!-- Menu -->
-  <a href class="collapse-menu-link ion-navicon" ng-click="isMenuCollapsed=!isMenuCollapsed"></a>
+  <a href class="collapse-menu-link ion-navicon visible-xs-block" ng-click="isMenuCollapsed=!isMenuCollapsed"></a>
+
+  <nav class="col-lg-6 col-md-7 col-sm-9 hidden-xs">
+    <ul>
+      <li ng-repeat="(key, menuitem) in menu">
+        <a href="{{ menuitem.root }}">{{ menuitem.title }}</a>
+      </li>
+    </ul>
+  </nav>
+
   <!-- Profile Access -->
   <div class="user-profile clearfix">
     <div class="al-user-profile" uib-dropdown>
