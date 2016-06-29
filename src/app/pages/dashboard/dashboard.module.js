@@ -107,7 +107,7 @@
                         type: 'serial',
                         theme: 'blur',
                         color: layoutColors.defaultText,
-                        "chartScrollbar": {
+                        chartScrollbar: {
                             scrollbarHeight: 10
                         },
                         mouseWheelZoomEnabled: true,
@@ -125,7 +125,7 @@
                             position: 'right',
                             title: 'Revenue (€)',
                             gridAlpha: 0.5,
-                            gridColor: layoutColors.border,
+                            gridColor: '#00AFBF',
                         }],
                         startDuration: 1,
                         graphs: [{

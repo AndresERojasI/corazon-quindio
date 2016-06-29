@@ -184,7 +184,7 @@
                             "valueField": "value",
                             "xField": "x",
                             "yField": "y",
-                            "maxBulletSize": 100,
+                            "maxBulletSize": 100
                         }],
                         "marginLeft": 0,
                         "marginBottom": 0,
@@ -192,8 +192,14 @@
                             "enabled": true
                         },
                         maxZoomFactor: 15,
-                        "chartScrollbar": {},
-                        "chartCursor": {}
+                        "chartScrollbar": {
+                            selectedBackgroundColor: '#F96868',
+                            selectedGraphFillAlpha: 0.5,
+                            selectedGraphFillColor: '#F96868'
+                        },
+                        "chartCursor": {
+                            selectionAlpha: 0.5
+                        }
                     });
 
                     chart.pathToImages = "assets/img/";
