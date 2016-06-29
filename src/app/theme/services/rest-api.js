@@ -70,6 +70,20 @@
 				});
 			};
 
+			restApi.setUserSettings = function(id, settings){
+				return new Promise(function(success, fail){
+					$http({
+					  method: 'POST',
+					  url: endpoint + '/user/'+id+'/settings',
+					  data: {settings: settings}
+					}).then(function (response) {
+					    success(response.data);
+					  }, function (response) {
+					  	fail(response.data);
+					  });
+				});
+			};
+
 			restApi.getAnalytics = function(id, startDate, endDate){
 				return new Promise(function(success, fail){
 					$http({

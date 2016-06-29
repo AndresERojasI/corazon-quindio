@@ -12,11 +12,11 @@
     function SidebarCtrl($scope, $rootScope, $timeout, $location, layoutSizes, sidebarService, $element) {
 
         // Date range selector for global query date administration
-        $scope.$watch('queryRange', function(newValue, oldValue) {
-            $rootScope.$broadcast('queryRangeChanged', {
-                queryRange: newValue
-            });
-        });
+        // $scope.$watch('queryRange', function(newValue, oldValue) {
+        //     $rootScope.$broadcast('queryRangeChanged', {
+        //         queryRange: newValue
+        //     });
+        // });
 
         $rootScope.$on('settingsChanged', function(event, data) {
             if (data.settings !== undefined && data.settings.userSettings !== undefined) {

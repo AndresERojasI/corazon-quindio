@@ -22,21 +22,21 @@
     <div class="col-lg-12">
         <div class="col-lg-4">
             <div class="col-lg-12 performance_metrics lemon-green">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5"><span>Returning Visitors</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5">Returning Visitors</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa fa-user"></i></div>
                 <strong>
                     {{ returning_visitors | currency : '' : 0}}
                 </strong>
             </div>
             <div class="col-lg-12 green performance_metrics">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>New Visitors</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">New Visitors</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-users"></i></div>
                 <strong>
                     {{ new_visitors | currency : '' : 0}}
                 </strong>
             </div>
             <div class="col-lg-12 olive-green performance_metrics">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Conversions</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">Conversions</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-heart"></i></div>
                 <strong>
                     {{ conversions | currency : '' : 0}}
@@ -50,21 +50,21 @@
         <br>
         <div class="col-lg-4">
             <div class="col-lg-12 performance_metrics pink">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>COST PER RETURNING VISITOR</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">COST PER RETURNING VISITOR</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
                 <strong>
                     {{ cpu | currency : '€' : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 pink-salmon performance_metrics">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>COST PER NEW VISITOR</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">COST PER NEW VISITOR</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
                 <strong>
                     {{ cpnu | currency : '€' : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 red performance_metrics">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>COST PER CONVERSION</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">COST PER CONVERSION</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
                 <strong>
                     {{ cpc | currency : '€' : 2}}
@@ -78,21 +78,21 @@
         <br>
         <div class="col-lg-4">
             <div class="col-lg-12 performance_metrics clear-blue">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Ads</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">Ads</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-video-camera"></i></div>
                 <strong>
-                    {{ ads | currency : '€' : 2}}
+                    {{ ads | currency : '' : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 blue performance_metrics">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Budget</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">Budget</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-money"></i></div>
                 <strong>
                     {{ budget | currency : '€' : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 dark-blue performance_metrics">
-                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 "><span>Revenue</span></div>
+                <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">Revenue</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-line-chart"></i></div>
                 <strong>
                     {{ revenue | currency : '€' : 2}}
