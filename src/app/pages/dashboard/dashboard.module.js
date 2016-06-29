@@ -24,9 +24,10 @@
         })
         .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', 'leafletData',
             function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, leafletData) {
+
                 $scope.scrollbarConfig = {
                     autoHideScrollbar: false,
-                    theme: 'light',
+                    theme: 'dark',
                     scrollInertia: 400,
                     axis: 'y'
                 }
@@ -106,6 +107,10 @@
                         type: 'serial',
                         theme: 'blur',
                         color: layoutColors.defaultText,
+                        "chartScrollbar": {
+                            scrollbarHeight: 10
+                        },
+                        mouseWheelZoomEnabled: true,
                         export: {
                             enabled: true,
                             menu: [{

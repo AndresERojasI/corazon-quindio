@@ -11,7 +11,7 @@
                 .state('roi', {
                     url: '/roi',
                     templateUrl: 'app/pages/roi/roi.html',
-                    title: 'Roi',
+                    title: 'ROI',
                     sidebarMeta: {
                         icon: 'ion-android-home',
                         order: 0,
@@ -60,8 +60,12 @@
                 };
 
                 resize($scope).call(function () {
-                    AnalyticsService.calculateRoi($scope);
+                    if($rootScope.userSettings){
+                        AnalyticsService.calculateRoi($scope);
+                    }
                 });
+
+                
 
                 // Third filter
                 $scope.third_filter = 'users';
@@ -99,6 +103,7 @@
 
                 if ($rootScope.performanceCalculated || AnalyticsService.informationLoaded) {
                     AnalyticsService.calculateRoi($scope);
+
                 } else {
                     //Intercept the Loaded information action
                     $rootScope.$on('informationLoaded', function() {
@@ -109,7 +114,8 @@
 
                 // Load bar chart
                 $scope.loadBarChart = function(treemapData) {
-                    var barChart = AmCharts.makeChart('barChart', {
+
+                    var barChart = AmCharts.makeChart('barChartRoi', {
                         "type": "serial",
                         "theme": "light",
                         "categoryField": "name",

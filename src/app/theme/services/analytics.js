@@ -6,19 +6,31 @@
             function($rootScope, RestApi, $uibModal, envService, cfpLoadingBar, $q, $http, layoutColors, layoutPaths, $filter) {
 
                 var user = $rootScope.currentUser;
-                $rootScope.settings = undefined;
+                //$rootScope.settings = undefined;
                 var service = {};
 
                 // listen for the event in the relevant $rootScope
                 $rootScope.$on('queryRangeChanged', function(event, data) {
                     if (data.queryRange !== undefined) {
-                        // TODO: update dates in settings
+                        $rootScope.userSettings.queryStartdate = data.queryRange.startDate.toString();
+                        $rootScope.userSettings.queryEnddate = data.queryRange.endDate.toString();
+
+                        service.informationLoaded = false;
+                        service.initService(false);
+                        
+                        RestApi.setUserSettings(user.userId, $rootScope.userSettings)
+                            .then(function(result){
+                                console.log('Settings updated');
+                            })
+                            .catch(function(error){
+                                console.log('Error updating settings');
+                            });
                     }
                 });
 
                 service.informationLoaded = false;
 
-                service.initService = function() {
+                service.initService = function(queryChanged) {
                     // Get the settings
                     RestApi.getUserSettings(user.userId)
                         .then(function(settings) {
@@ -32,13 +44,20 @@
                                 backdrop: 'static'
                             });
 
-                            $rootScope.userSettings = settings.userSettings;
-                            $rootScope.$broadcast('settingsChanged', {
-                                settings: settings
-                            });
+                            try{
+                                if(!queryChanged){
+                                    $rootScope.userSettings = settings.userSettings;
+                                    $rootScope.$broadcast('settingsChanged', {
+                                        settings: settings
+                                    });
+                                }
 
-                            var startDate = moment(settings.userSettings.queryStartdate, "YYYY-MM-DD");
-                            var endDate = moment(settings.userSettings.queryEnddate, "YYYY-MM-DD");
+                            }catch(e){
+                                console.log(e);
+                            }
+
+                            var startDate = moment($rootScope.userSettings.queryStartdate, "YYYY-MM-DD");
+                            var endDate = moment($rootScope.userSettings.queryEnddate, "YYYY-MM-DD");
                             var queryRange = moment.range(startDate, endDate);
                             var clientId = $rootScope.currentClient.clientId;
                             // Base api endpoint
@@ -48,6 +67,7 @@
                             var analyticsPromises = [];
 
                             queryRange.by('months', function(month) {
+
                                 // Now get the data from the DB
                                 analyticsPromises.push(
                                     $http({
@@ -79,7 +99,7 @@
                                     $rootScope.displayContent = true;
                                     service.informationLoaded = true;
                                     $rootScope.$broadcast('informationLoaded');
-                                    //$rootScope.$apply();
+                                    
 
                                 })
                                 .catch(function(error) {
@@ -147,7 +167,7 @@
 
                                 $scope.costPerConversion = (result[0].total_budget > 0) ? result[0].total_budget / $rootScope.userSettings.goalRevenue : 0;
                                 $scope.roi = (result[0].total_budget > 0) ? $scope.revenue / result[0].total_budget : 0;
-
+                                $scope.$apply();
                                 // Budget efficiency
                                 alasql
                                     .promise(
@@ -210,6 +230,7 @@
                                 }
 
                                 $scope.loadChart(dailyRevenue);
+                                $scope.$apply();
                             })
                             .catch(function(error) {
                                 console.log(error);
@@ -223,6 +244,7 @@
                                 ') WHERE visit_count >= 1', [analytics])
                             .then(function(result) {
                                 $scope.citiesList = result;
+                                $scope.$apply();
                             })
                             .catch(function(error) {
                                 console.log(error);
