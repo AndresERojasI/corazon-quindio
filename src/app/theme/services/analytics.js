@@ -11,18 +11,18 @@
 
                 // listen for the event in the relevant $rootScope
                 $rootScope.$on('queryRangeChanged', function(event, data) {
-                    if (data.queryRange !== undefined) {
-                        $rootScope.userSettings.queryStartdate = data.queryRange.startDate.toString();
-                        $rootScope.userSettings.queryEnddate = data.queryRange.endDate.toString();
+                    if (data.queryRange !== undefined && $rootScope.userSettings !== undefined) {
+                        $rootScope.userSettings.queryStartdate = data.queryRange.startDate.format('YYYY-MM-DD').toString();
+                        $rootScope.userSettings.queryEnddate = data.queryRange.endDate.format('YYYY-MM-DD').toString();
 
                         service.informationLoaded = false;
-                        service.initService(false);
-                        
+                        service.initService(true);
+
                         RestApi.setUserSettings(user.userId, $rootScope.userSettings)
-                            .then(function(result){
+                            .then(function(result) {
                                 console.log('Settings updated');
                             })
-                            .catch(function(error){
+                            .catch(function(error) {
                                 console.log('Error updating settings');
                             });
                     }
@@ -44,20 +44,22 @@
                                 backdrop: 'static'
                             });
 
-                            try{
-                                if(!queryChanged){
+                            try {
+                                if (!queryChanged) {
                                     $rootScope.userSettings = settings.userSettings;
                                     $rootScope.$broadcast('settingsChanged', {
                                         settings: settings
                                     });
                                 }
 
-                            }catch(e){
+                            } catch (e) {
                                 console.log(e);
                             }
 
                             var startDate = moment($rootScope.userSettings.queryStartdate, "YYYY-MM-DD");
                             var endDate = moment($rootScope.userSettings.queryEnddate, "YYYY-MM-DD");
+                            var startDate2 = moment($rootScope.userSettings.queryStartdate, "YYYY-MM-DD");
+                            var endDate2 = moment($rootScope.userSettings.queryEnddate, "YYYY-MM-DD");
                             var queryRange = moment.range(startDate, endDate);
                             var clientId = $rootScope.currentClient.clientId;
                             // Base api endpoint
@@ -66,52 +68,87 @@
 
                             var analyticsPromises = [];
 
-                            queryRange.by('months', function(month) {
+                            var monthDifference = endDate2.diff(startDate2, 'months');
 
+                            if (monthDifference != 0) {
+                                queryRange.by('months', function(month) {
+                                    var startQuery = month.toString();
+                                    var endQuery = month.endOf('month');
+
+                                    if (endQuery.isAfter(endDate2)) {
+                                        endQuery = endDate2;
+                                    }
+                                    // Now get the data from the DB
+                                    analyticsPromises.push(
+                                        $http({
+                                            method: 'POST',
+                                            url: endpoint + '/client/' + clientId + '/analytics',
+                                            data: {
+                                                startDate: startQuery,
+                                                endDate: endQuery.toString()
+                                            },
+                                            cache: true
+                                        })
+                                    );
+                                });
+                            } else {
                                 // Now get the data from the DB
                                 analyticsPromises.push(
                                     $http({
                                         method: 'POST',
                                         url: endpoint + '/client/' + clientId + '/analytics',
                                         data: {
-                                            startDate: month.toString(),
-                                            endDate: month.endOf('month').toString()
+                                            startDate: startDate2.toString(),
+                                            endDate: endDate2.toString()
                                         },
                                         cache: true
                                     })
                                 );
-                            });
+                            }
 
-                            $q.all(analyticsPromises)
-                                .then(function(result) {
-                                    $rootScope.analytics = [];
-                                    //copy the result to the $rootscope
-                                    for (var i = 0, len = result.length; i < len; i++) {
+                            if (analyticsPromises.length > 0) {
+                                $q.all(analyticsPromises)
+                                    .then(function(result) {
+                                        $rootScope.analytics = [];
+                                        //copy the result to the $rootscope
+                                        for (var i = 0, len = result.length; i < len; i++) {
 
-                                        var data = result[i].data.analytics;
+                                            var data = result[i].data.analytics;
 
-                                        for (var j = 0; j < data.length; j++) {
-                                            $rootScope.analytics.push(data[j]);
+                                            for (var j = 0; j < data.length; j++) {
+                                                $rootScope.analytics.push(data[j]);
+                                            }
                                         }
-                                    }
 
-                                    infoModal.close();
-                                    $rootScope.displayContent = true;
-                                    service.informationLoaded = true;
-                                    $rootScope.$broadcast('informationLoaded');
-                                    
+                                        if ($rootScope.analytics.length === 0) {
+                                            infoModal.close();
+                                            $uibModal.open({
+                                                animation: true,
+                                                templateUrl: 'app/theme/generalViews/EmptyAnalytics.html',
+                                                size: 'sm',
+                                                scope: $rootScope,
+                                                keyboard: true,
+                                                backdrop: 'static'
+                                            });
+                                        } else {
+                                            infoModal.close();
+                                            $rootScope.displayContent = true;
+                                            service.informationLoaded = true;
+                                            $rootScope.$broadcast('informationLoaded');
+                                        }
 
-                                })
-                                .catch(function(error) {
-                                    infoModal.close();
-                                    // Download analytics failed
-                                    $uibModal.open({
-                                        animation: true,
-                                        templateUrl: 'app/theme/generalViews/noAnalytics.html',
-                                        size: 'sm',
-                                        scope: $rootScope
+                                    })
+                                    .catch(function(error) {
+                                        infoModal.close();
+                                        // Download analytics failed
+                                        $uibModal.open({
+                                            animation: true,
+                                            templateUrl: 'app/theme/generalViews/noAnalytics.html',
+                                            size: 'sm',
+                                            scope: $rootScope
+                                        });
                                     });
-                                });
+                            }
 
 
                         })
@@ -138,10 +175,11 @@
 
                 // Calculation of the dashboard Metrics
                 service.dashboard = {};
+                $rootScope.dashboardCalculated = false;
                 service.calculateDashboard = function($scope) {
                     var self = this;
 
-                    if (!$rootScope.analytics || Object.keys($rootScope.analytics).length === 0) {
+                    if (!service.informationLoaded) {
                         service.initService();
                     }
 
@@ -229,6 +267,8 @@
                                     });
                                 }
 
+                                $rootScope.dashboardCalculated = true;
+
                                 $scope.loadChart(dailyRevenue);
                                 $scope.$apply();
                             })
@@ -258,7 +298,7 @@
                 service.performance = {};
                 service.calculatePerformance = function($scope) {
 
-                    if (!$rootScope.analytics || Object.keys($rootScope.analytics).length === 0) {
+                    if (!service.informationLoaded) {
                         service.initService();
                     }
 
@@ -386,7 +426,7 @@
 
                 // Trends calculaitons
                 service.calculateTrends = function($scope) {
-                    if (!$rootScope.analytics || Object.keys($rootScope.analytics).length === 0) {
+                    if (!service.informationLoaded) {
                         service.initService();
                     }
 
@@ -471,7 +511,7 @@
                 };
 
                 service.calculateTrendsTotals = function($scope) {
-                    if (!$rootScope.analytics || Object.keys($rootScope.analytics).length === 0) {
+                    if (!service.informationLoaded) {
                         service.initService();
                     }
 
@@ -544,7 +584,7 @@
                 };
 
                 service.calculateTrendsTable = function($scope) {
-                    if (!$rootScope.analytics || Object.keys($rootScope.analytics).length === 0) {
+                    if (!service.informationLoaded) {
                         service.initService();
                     }
 
@@ -758,7 +798,7 @@
                 };
 
                 service.calculateRoi = function($scope) {
-                    if (!$rootScope.analytics || Object.keys($rootScope.analytics).length === 0) {
+                    if (!service.informationLoaded) {
                         service.initService();
                     }
 
