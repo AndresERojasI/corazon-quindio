@@ -14,6 +14,7 @@
     'ROA.pages.roi',
     'ROA.pages.login',
     'ROA.pages.noClient',
+    'ROA.pages.profile',
   ])
       .config(routeConfig);
 
