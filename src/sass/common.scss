@@ -222,6 +222,10 @@ a[title="JavaScript charts"]{display: none !important;}
 }
 
 .page-top {
+    .al-logo img{
+        height: 60px;
+    }
+
     nav {
         ul {
             margin: 24px 0;
@@ -610,8 +614,14 @@ div#map-wrapper div.leaflet-control-zoom a {
 }
 
 #map-top-destinations h3 {
-    border-bottom: 1px solid #B7B7B7;
     text-align: center;
+}
+
+
+
+#map-top-destinations table tbody tr td.table-id {
+    line-height: 17px;
+    font-weight: bold;
 }
 
 #map-top-destinations ul {
@@ -663,6 +673,11 @@ button:active {
  * Performance page styles
  */
 #performance_page {
+
+    .table > tbody > tr > td:first-child{
+        text-align: left;
+    }
+
     #filters-bar {
         padding: 15px;
         margin-bottom: 20px;

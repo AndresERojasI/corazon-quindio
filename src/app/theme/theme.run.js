@@ -35,6 +35,7 @@
           .then(function(result){
             $rootScope.currentUser = result.user;
             $rootScope.currentClient = result.client;
+            console.log($rootScope.currentClient);
             return $state.go(toState.name, toParams);
           })
           .catch(function(error){

@@ -17,6 +17,11 @@
             });
         });
 
+        $scope.datepickerRanges = {
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        };
+
         $rootScope.$on('settingsChanged', function(event, data) {
             if (data.settings !== undefined && data.settings.userSettings !== undefined) {
                 angular.element('#date_selector').data('daterangepicker').setStartDate(moment(data.settings.userSettings.queryStartdate).add(1, 'days'));
