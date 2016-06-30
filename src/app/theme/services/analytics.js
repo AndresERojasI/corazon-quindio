@@ -472,6 +472,9 @@
                                 'Friday',
                                 'Saturday'
                             );
+
+                            var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
                             for (var i = 0, len = result.length; i < len; i++) {
                                 var date = new Date(result[i].visit_time);
                                 //date.setDate(1);
@@ -484,6 +487,7 @@
                                     cpu: $filter('currency')(result[i].cpu, '', 2),
                                     daypart: result[i].daypart,
                                     month: parseInt(result[i].month),
+                                    month_name: months[parseInt(result[i].month) - 1],
                                     new_users: $filter('currency')(result[i].new_users_sum, '', 2),
                                     revenue: $filter('currency')(result[i].revenue, '', 2),
                                     users: $filter('currency')(result[i].users_sum, '', 2),
@@ -495,14 +499,37 @@
                                 });
                             }
 
-                            var $chartsInstanceArray = [];
-                            $chartsInstanceArray.push($scope.createUsersChart(tempArr));
-                            $chartsInstanceArray.push($scope.createCostsChart(tempArr));
-                            $chartsInstanceArray.push($scope.createTotalsChart(tempArr));
+                            if (tempArr.length > 0 && $scope.first_filter == 'month') {
 
-                            $scope.syncCharts($chartsInstanceArray);
+                                // Total calculations
+                                alasql
+                                    .promise(
+                                        'SELECT * FROM ? ORDER BY month', [tempArr])
+                                    .then(function(result) {
+                                        var $chartsInstanceArray = [];
+                                        $chartsInstanceArray.push($scope.createUsersChart(result));
+                                        $chartsInstanceArray.push($scope.createCostsChart(result));
+                                        $chartsInstanceArray.push($scope.createTotalsChart(result));
 
-                            $rootScope.trendsCalculated = true;
+                                        $scope.syncCharts($chartsInstanceArray);
+
+                                        $rootScope.trendsCalculated = true;
+                                    })
+                                    .catch(function(error) {
+                                        console.log(error);
+                                    });
+                            }else{
+                                var $chartsInstanceArray = [];
+                                $chartsInstanceArray.push($scope.createUsersChart(tempArr));
+                                $chartsInstanceArray.push($scope.createCostsChart(tempArr));
+                                $chartsInstanceArray.push($scope.createTotalsChart(tempArr));
+
+                                $scope.syncCharts($chartsInstanceArray);
+
+                                $rootScope.trendsCalculated = true;
+                            }
+
+
                         })
                         .catch(function(error) {
                             console.log(error);

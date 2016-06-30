@@ -49,9 +49,9 @@
                             $scope.parseDate = false;
                             break;
                         case 'month':
-                            $scope.categoryField = 'visit_time';
-                            $scope.dateFormat = 'MMMM';
-                            $scope.parseDate = true;
+                            $scope.categoryField = 'month_name';
+                            $scope.dateFormat = 'MM';
+                            $scope.parseDate = false;
                             break;
                     }
 
@@ -86,6 +86,7 @@
 
                 // Users, new users, conversions chart
                 $scope.createUsersChart = function(data) {
+                    console.log(data);
                     $scope.chart = AmCharts.makeChart("chartdiv", {
                         "type": "serial",
                         "theme": "light",
