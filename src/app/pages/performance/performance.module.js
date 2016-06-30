@@ -193,9 +193,6 @@
                         },
                         maxZoomFactor: 15,
                         "chartScrollbar": {
-                            selectedBackgroundColor: '#F96868',
-                            selectedGraphFillAlpha: 0.5,
-                            selectedGraphFillColor: '#F96868'
                         },
                         "chartCursor": {
                             selectionAlpha: 0.5

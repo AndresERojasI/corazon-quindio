@@ -108,7 +108,8 @@
                         theme: 'blur',
                         color: layoutColors.defaultText,
                         chartScrollbar: {
-                            scrollbarHeight: 10
+                            scrollbarHeight: 10,
+                            
                         },
                         mouseWheelZoomEnabled: true,
                         export: {
@@ -137,15 +138,20 @@
                             valueField: 'revenue'
                         }],
                         chartCursor: {
-                            categoryBalloonEnabled: false,
-                            cursorAlpha: 0,
-                            zoomable: true
+                            categoryBalloonEnabled: true,
+                            cursorAlpha: 1,
+                            zoomable: true,
+                            cursorColor: '#ff0000',
+                            selectionAlpha: 0.5
+                        },
+                        chartCursorSettings: {
+
                         },
                         categoryField: 'date',
                         categoryAxis: {
                             gridPosition: 'start',
                             labelRotation: 45,
-                            gridAlpha: 0.5,
+                            gridAlpha: 1,
                             gridColor: layoutColors.border,
                         },
                         pathToImages: 'assets/img/'
