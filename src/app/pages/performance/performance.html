@@ -127,7 +127,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in smartTableData">
-                        <td ng-show="tableColumns.name.enabled">{{ item.name }}</td>
+                        <td ng-show="tableColumns.name.enabled" class="text-left">{{ item.name }}</td>
                         <td ng-show="tableColumns.ads.enabled">{{ item.ads | currency : '' : 2}}</td>
                         <td ng-show="tableColumns.budget.enabled">{{ item.budget | currency : '€' : 2}}</td>
                         <td ng-show="tableColumns.roi.enabled">{{ item.roi | currency : '€' : 2}}</td>

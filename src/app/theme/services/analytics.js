@@ -243,10 +243,10 @@
                         alasql
                             .promise(
                                 'SELECT ' +
-                                'year, month, day,' +
+                                'year, month, day,visitDate,' +
                                 'SUM(' + $rootScope.userSettings.goalField + ') * ' + $rootScope.userSettings.goalRevenue + ' as revenue' +
                                 ' FROM (' +
-                                'SELECT ' +
+                                'SELECT visitDate,' +
                                 'visitDate->getFullYear() as year, ' +
                                 'visitDate->getMonth() + 1 as month, ' +
                                 'visitDate->getDate() as day, ' +
@@ -259,11 +259,13 @@
                                 var dailyRevenue = [];
                                 for (var i = 0, len = result.length; i < len; i++) {
                                     var date = moment(result[i].year + '/' + result[i].month + '/' + result[i].day, 'YYYY/MM/DD').format('MMM DD').toString();
+                                    var date2 = moment(result[i].year + '/' + result[i].month + '/' + result[i].day, 'YYYY/MM/DD');
 
                                     dailyRevenue.push({
                                         date: date,
                                         revenue: result[i].revenue.toFixed(2),
-                                        color: layoutColors.success
+                                        color: layoutColors.success,
+                                        visitDate: date2
                                     });
                                 }
 

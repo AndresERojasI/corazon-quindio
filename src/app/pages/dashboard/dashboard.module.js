@@ -22,8 +22,8 @@
                     }
                 });
         })
-        .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', 'leafletData',
-            function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, leafletData) {
+        .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', 'leafletData','$filter',
+            function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, leafletData,$filter) {
 
                 $scope.scrollbarConfig = {
                     autoHideScrollbar: false,
@@ -130,7 +130,16 @@
                         }],
                         startDuration: 1,
                         graphs: [{
-                            balloonText: '<b>[[category]]: &euro;[[value]]</b>',
+                            balloonFunction: function(graphDataItem, graph){
+                                var newDate = graphDataItem.dataContext.visitDate.format('dddd, MMMM DD, YYYY');
+                                var newRevenue = $filter('currency')(graphDataItem.dataContext.revenue, '€', 2);
+                                var tooltipText = [newDate,
+                                    '<br>',
+                                    'Revenue:',
+                                    newRevenue].join('\n');
+
+                                return tooltipText;
+                            },
                             fillColorsField: 'color',
                             fillAlphas: 1,
                             lineAlpha: 0.2,
