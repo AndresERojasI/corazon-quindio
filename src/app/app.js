@@ -53,8 +53,8 @@ angular.module('ROA', [
       development: {
         restApiEndpoint: 'http://restapi.resultsonair.com:1337',
 
-        baseAppUrl: 'http://corazonquindio.com',
-        baseAppLogin: 'http://corazonquindio.com/#/login'
+        baseAppUrl: 'http://54.187.238.34',
+        baseAppLogin: 'http://54.187.238.34/#/login'
       },
       production: {},
     }
