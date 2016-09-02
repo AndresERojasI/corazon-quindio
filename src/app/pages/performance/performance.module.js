@@ -14,7 +14,7 @@
                     title: 'Performance',
                     sidebarMeta: {
                         icon: 'ion-android-home',
-                        order: 0,
+                        order: 0
                     },
                     controller: 'PerformanceCtrl',
                     data: {
@@ -52,8 +52,25 @@
 
                 // Third filter
                 $scope.third_filter = 'users';
+                $scope.bubble_message = 'Returning Users';
+                $scope.bubble_submessage = 'Returning User';
                 $scope.setThirdFilter = function(newFilter){
                     $scope.third_filter = newFilter;
+
+                    switch($scope.third_filter){
+                        case 'users':
+                            $scope.bubble_message = 'Returning Users';
+                            $scope.bubble_submessage = 'Returning User';
+                            break;
+                        case 'new_users':
+                            $scope.bubble_message = 'New Users';
+                            $scope.bubble_submessage = 'New User';
+                            break;
+                        case 'conversions':
+                            $scope.bubble_message = 'Conversions';
+                            $scope.bubble_submessage = 'Conversion';
+                            break;
+                    }
 
                     AnalyticsService.calculatePerformance($scope);
                 };
@@ -127,7 +144,7 @@
 
                 $scope.displayColumn = function(column_id){
                     $scope.tableColumns[column_id].enabled = !$scope.tableColumns[column_id].enabled;
-                }
+                };
 
                 $scope.needFormat = [
                     'budget',
@@ -142,7 +159,7 @@
 
                             $scope.tableColumns[data].count = parseFloat(Math.round(totals[data] * 100) / 100).toFixed(2);
                             if ($scope.needFormat.indexOf(data) > -1) {
-                                $scope.tableColumns[data].count = $filter('currency')($scope.tableColumns[data].count, '€', 2);
+                                $scope.tableColumns[data].count = $filter('currency')($scope.tableColumns[data].count, $rootScope.userSettings.currency, 2);
                             }
 
                         }
@@ -151,31 +168,50 @@
                     $scope.cost_per_user = totals.cpu;
                     $scope.cost_per_new_user = totals.cpnu;
                     $scope.cost_per_conversion = totals.cpc;
-                }
+                };
 
 
                 $scope.enableChart = function(data){
+                    var minVal = parseFloat(data[0].x), maxVal = 0;
+                    data.map(function(currentValue){
+                        var temporal = parseFloat(currentValue.x);
+
+                        if(temporal > maxVal){
+                            maxVal = temporal;
+                        }else if(temporal < minVal){
+                            minVal = temporal;
+                        }
+                    });
+
+                    console.log(maxVal);
+                    console.log(minVal);
+
                     var chart = AmCharts.makeChart("bubble-chart", {
                         "type": "xy",
                         "balloon": {
-                            "fixedPosition": false,
+                            "fixedPosition": false
                         },
                         "pathToImages": "assets/img/",
                         "dataProvider": data,
                         "valueAxes": [{
                             "position": "bottom",
-                            "axisAlpha": 0
+                            "axisAlpha": 0,
+                            "autoGridCount": true,
+                            minimum: minVal,
+                            maximum: maxVal
                         }, {
                             //"minMaxMultiplier": 1.2,
                             "axisAlpha": 0,
                             "position": "left",
-                            "unit": "€",
-                            "title": "Avg Cost per Conversion",
+                            "unit": $rootScope.userSettings.currency,
+                            "title": "Avg Cost per "+$scope.bubble_submessage,
                             "titleColor" : "#666666"
                         }],
                         //"startDuration": 1.5,
                         "graphs": [{
-                            "balloonText": "<b>[[title]]</b><br>Conversions:<b>[[x]]</b><br> Cost Per Conversion:<b>[[y]]</b>",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "<b>"+graphDataItem.dataContext.title+"</b><br>"+$scope.bubble_message+":<b>"+$filter('currency')(graphDataItem.dataContext.x, '', 2)+"</b><br> Cost Per "+$scope.bubble_submessage+":<b>"+$filter('currency')(graphDataItem.dataContext.y, '', 2)+"</b>"
+                            },
                             "bullet": "circle",
                             "bulletBorderAlpha": 0.2,
                             "bulletAlpha": 0.8,
@@ -192,8 +228,7 @@
                             "enabled": true
                         },
                         maxZoomFactor: 15,
-                        "chartScrollbar": {
-                        },
+                        "chartScrollbar": {},
                         "chartCursor": {
                             selectionAlpha: 0.5
                         }

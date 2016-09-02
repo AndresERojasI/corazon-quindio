@@ -95,7 +95,9 @@
                         "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "returning_visitors",
-                            "balloonText": "Returning visitors: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Returning Visitors "+$filter('currency')(graphDataItem.values.value, '', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -110,7 +112,9 @@
                             }
                         }, {
                             "id": "new_visitors",
-                            "balloonText": "New Users: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "New Visitors "+$filter('currency')(graphDataItem.values.value, '', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -125,7 +129,9 @@
                             }
                         }, {
                             "id": "conversions",
-                            "balloonText": "Conversions: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Conversions "+$filter('currency')(graphDataItem.values.value, '', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -183,7 +189,9 @@
                         "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "cpu",
-                            "balloonText": "Cost per User: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Cost Per User "+$filter('currency')(graphDataItem.values.value, '$', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -199,7 +207,9 @@
                             }
                         }, {
                             "id": "cpnu",
-                            "balloonText": "Cost Per New User: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Cost per New User "+$filter('currency')(graphDataItem.values.value, '$', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -214,7 +224,9 @@
                             }
                         }, {
                             "id": "cpc",
-                            "balloonText": "Cost Per Conversion: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Cost per Conversion "+$filter('currency')(graphDataItem.values.value, '$', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -270,7 +282,9 @@
                         "dataDateFormat": $scope.dateFormat,
                         "graphs": [{
                             "id": "ads",
-                            "balloonText": "ADS: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "ADS "+$filter('currency')(graphDataItem.values.value, '', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -285,7 +299,9 @@
                             "lineColor": '#28aef3'
                         }, {
                             "id": "budget",
-                            "balloonText": "budget: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Budget "+$filter('currency')(graphDataItem.values.value, '$', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",
@@ -300,7 +316,9 @@
                             "lineColor": '#2e81ad'
                         }, {
                             "id": "revenue",
-                            "balloonText": "Revenue: [[value]]",
+                            "balloonFunction": function(graphDataItem, graph) {
+                                return "Revenue "+$filter('currency')(graphDataItem.values.value, '$', 2);
+                            },
                             "bullet": "round",
                             "bulletBorderAlpha": 1,
                             "bulletColor": "#FFFFFF",

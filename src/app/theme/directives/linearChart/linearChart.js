@@ -111,8 +111,8 @@
                     tooltip[0][0].innerHTML = 
                       ['<b>'+d.name+'</b><br>',
                       $filter('currency')(d.value, '', 0)+' | '+$filter('currency')(d.value_percent, '', 2)+'% '+d.text_value_percent+' <br>',
-                      $filter('currency')(d.budget, '€', 2) +' | ' + $filter('currency')(d.budget_percent, '', 2) +'% of total budget <br>',
-                      $filter('currency')(d.conversion_value, '€', 2) + ' | ' + $filter('currency')(d.conversion_percent, '', 2) + ' from total '+d.conversion_text].join('\n');
+                      $filter('currency')(d.budget, $rootScope.userSettings.currency, 2) +' | ' + $filter('currency')(d.budget_percent, '', 2) +'% of total budget <br>',
+                      $filter('currency')(d.conversion_value, $rootScope.userSettings.currency, 2) + ' | ' + $filter('currency')(d.conversion_percent, '', 2) + ' from total '+d.conversion_text].join('\n');
                 }
 
                 // Compute the treemap layout recursively such that each group of siblings

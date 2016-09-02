@@ -31,6 +31,7 @@
                 service.informationLoaded = false;
 
                 service.initService = function(queryChanged) {
+
                     // Get the settings
                     RestApi.getUserSettings(user.userId)
                         .then(function(settings) {
@@ -283,9 +284,10 @@
                             .promise(
                                 'SELECT * FROM (' +
                                 'SELECT SUM(' + $rootScope.userSettings.goalField + ') AS visit_count, country, region, city FROM ? GROUP BY country, region, city ORDER BY visit_count DESC' +
-                                ') WHERE visit_count >= 1', [analytics])
+                                ') WHERE visit_count >= 1 LIMIT 10', [analytics])
                             .then(function(result) {
                                 $scope.citiesList = result;
+                                $scope.geocodeCities();
                                 $scope.$apply();
                             })
                             .catch(function(error) {
@@ -360,7 +362,8 @@
                         '',
                         'FROM',
                         '?' +
-                        'GROUP BY ' + $scope.first_filter
+                        'GROUP BY visitDate, ' + $scope.first_filter,
+                        'ORDER BY visitDate, ' + $scope.first_filter + ' ASC'
                     ].join(' ');
 
                     if ($scope.second_filter.filter !== false) {
@@ -374,6 +377,8 @@
                         .promise(
                             query, [analytics])
                         .then(function(result) {
+
+
                             var tempArray = [];
                             var chartArray = [];
                             for (var i = 0, len = result.length; i < len; i++) {
@@ -393,13 +398,8 @@
                                         break;
                                 };
 
-                                if (y) {
-                                    y = $filter('currency')(y, '', 2);
-                                }
-
-
                                 if (result[i].conversions) {
-                                    x = $filter('currency')(result[i].conversions, '', 2);
+                                    x = result[i].conversions;
                                 }
 
                                 chartArray.push({
@@ -434,7 +434,7 @@
 
                     var analytics = $rootScope.analytics;
 
-                    // Total calculations
+                    // Detail calculations
                     alasql
                         .promise(
                             ['SELECT',
@@ -465,20 +465,11 @@
 
                             var tempArr = [];
 
-                            var dayNames = new Array(
-                                'Sunday',
-                                'Monday',
-                                'Tuesday',
-                                'Wednesday',
-                                'Thursday',
-                                'Friday',
-                                'Saturday'
-                            );
+                            var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-                            var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+                            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
                             for (var i = 0, len = result.length; i < len; i++) {
-                                var date = new Date(result[i].visit_time);
                                 //date.setDate(1);
                                 tempArr.push({
                                     ads: $filter('currency')(result[i].ads_sum, '', 2),
@@ -493,7 +484,7 @@
                                     new_users: $filter('currency')(result[i].new_users_sum, '', 2),
                                     revenue: $filter('currency')(result[i].revenue, '', 2),
                                     users: $filter('currency')(result[i].users_sum, '', 2),
-                                    visit_time: date,
+                                    visit_time: moment(result[i].visit_time).format('YYYY-MM-DD').toString(),
                                     week: result[i].week,
                                     weekday: result[i].weekday,
                                     hour: result[i].hour,
@@ -501,36 +492,16 @@
                                 });
                             }
 
-                            if (tempArr.length > 0 && $scope.first_filter == 'month') {
+                            console.log(tempArr);
 
-                                // Total calculations
-                                alasql
-                                    .promise(
-                                        'SELECT * FROM ? ORDER BY month', [tempArr])
-                                    .then(function(result) {
-                                        var $chartsInstanceArray = [];
-                                        $chartsInstanceArray.push($scope.createUsersChart(result));
-                                        $chartsInstanceArray.push($scope.createCostsChart(result));
-                                        $chartsInstanceArray.push($scope.createTotalsChart(result));
+                            var $chartsInstanceArray = [];
+                            $chartsInstanceArray.push($scope.createUsersChart(tempArr));
+                            $chartsInstanceArray.push($scope.createCostsChart(tempArr));
+                            $chartsInstanceArray.push($scope.createTotalsChart(tempArr));
 
-                                        $scope.syncCharts($chartsInstanceArray);
+                            $scope.syncCharts($chartsInstanceArray);
 
-                                        $rootScope.trendsCalculated = true;
-                                    })
-                                    .catch(function(error) {
-                                        console.log(error);
-                                    });
-                            }else{
-                                var $chartsInstanceArray = [];
-                                $chartsInstanceArray.push($scope.createUsersChart(tempArr));
-                                $chartsInstanceArray.push($scope.createCostsChart(tempArr));
-                                $chartsInstanceArray.push($scope.createTotalsChart(tempArr));
-
-                                $scope.syncCharts($chartsInstanceArray);
-
-                                $rootScope.trendsCalculated = true;
-                            }
-
+                            $rootScope.trendsCalculated = true;
 
                         })
                         .catch(function(error) {
@@ -779,11 +750,11 @@
 
                                 table_structure[result[i].daypart][result[i].weekday] = {
                                     ads: $filter('currency')(result[i].ads_total, '', 2) || 0,
-                                    budget: $filter('currency')($filter('currency')(result[i].budget_total, '', 2), '€', 2) || 0,
+                                    budget: $filter('currency')($filter('currency')(result[i].budget_total, '', 2), $rootScope.userSettings.currency, 2) || 0,
                                     conversions: $filter('currency')(result[i].conversions_total, '', 2) || 0,
-                                    cpc: $filter('currency')($filter('currency')(result[i].cpc_total, '', 2), '€', 2) || 0,
-                                    cpnu: $filter('currency')($filter('currency')(result[i].cpnu_total, '', 2), '€', 2) || 0,
-                                    cpu: $filter('currency')($filter('currency')(result[i].cpu_total, '', 2), '€', 2) || 0,
+                                    cpc: $filter('currency')($filter('currency')(result[i].cpc_total, '', 2), $rootScope.userSettings.currency, 2) || 0,
+                                    cpnu: $filter('currency')($filter('currency')(result[i].cpnu_total, '', 2), $rootScope.userSettings.currency, 2) || 0,
+                                    cpu: $filter('currency')($filter('currency')(result[i].cpu_total, '', 2), $rootScope.userSettings.currency, 2) || 0,
                                     users: $filter('currency')(result[i].users_total, '', 2) || 0,
                                     new_users: $filter('currency')(result[i].new_users_total, '', 2) || 0
                                 };
@@ -792,22 +763,22 @@
                             try {
                                 for (var id in total_daypart) {
                                     total_daypart[id].ads_total = $filter('currency')(total_daypart[id].ads_total, '', 2);
-                                    total_daypart[id].budget_total = $filter('currency')(total_daypart[id].budget_total, '€', 2);
+                                    total_daypart[id].budget_total = $filter('currency')(total_daypart[id].budget_total, $rootScope.userSettings.currency, 2);
                                     total_daypart[id].conversions_total = $filter('currency')(total_daypart[id].conversions_total, '', 2);
-                                    total_daypart[id].cpc_total = $filter('currency')(total_daypart[id].cpc_total, '€', 2);
-                                    total_daypart[id].cpnu_total = $filter('currency')(total_daypart[id].cpnu_total, '€', 2);
-                                    total_daypart[id].cpu_total = $filter('currency')(total_daypart[id].cpu_total, '€', 2);
+                                    total_daypart[id].cpc_total = $filter('currency')(total_daypart[id].cpc_total, $rootScope.userSettings.currency, 2);
+                                    total_daypart[id].cpnu_total = $filter('currency')(total_daypart[id].cpnu_total, $rootScope.userSettings.currency, 2);
+                                    total_daypart[id].cpu_total = $filter('currency')(total_daypart[id].cpu_total, $rootScope.userSettings.currency, 2);
                                     total_daypart[id].users_total = $filter('currency')(total_daypart[id].users_total, '', 2);
                                     total_daypart[id].new_users_total = $filter('currency')(total_daypart[id].new_users_total, '', 2);
                                 }
 
                                 for (var id in total_weekday) {
                                     total_weekday[id].ads_total = $filter('currency')(total_weekday[id].ads_total, '', 2);
-                                    total_weekday[id].budget_total = $filter('currency')(total_weekday[id].budget_total, '€', 2);
+                                    total_weekday[id].budget_total = $filter('currency')(total_weekday[id].budget_total, $rootScope.userSettings.currency, 2);
                                     total_weekday[id].conversions_total = $filter('currency')(total_weekday[id].conversions_total, '', 2);
-                                    total_weekday[id].cpc_total = $filter('currency')(total_weekday[id].cpc_total, '€', 2);
-                                    total_weekday[id].cpnu_total = $filter('currency')(total_weekday[id].cpnu_total, '€', 2);
-                                    total_weekday[id].cpu_total = $filter('currency')(total_weekday[id].cpu_total, '€', 2);
+                                    total_weekday[id].cpc_total = $filter('currency')(total_weekday[id].cpc_total, $rootScope.userSettings.currency, 2);
+                                    total_weekday[id].cpnu_total = $filter('currency')(total_weekday[id].cpnu_total, $rootScope.userSettings.currency, 2);
+                                    total_weekday[id].cpu_total = $filter('currency')(total_weekday[id].cpu_total, $rootScope.userSettings.currency, 2);
                                     total_weekday[id].users_total = $filter('currency')(total_weekday[id].users_total, '', 2);
                                     total_weekday[id].new_users_total = $filter('currency')(total_weekday[id].new_users_total, '', 2);
                                 }
@@ -822,7 +793,7 @@
 
                         })
                         .catch(function(error) {
-                            console.log();
+                            console.log(error);
                         });
                 };
 

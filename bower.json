@@ -74,7 +74,8 @@
     "ui-leaflet": "^1.0.1",
     "angularD3": "^0.1.1",
     "ng-scrollbars": "^0.0.10",
-    "angular-resize": "^1.0.0"
+    "angular-resize": "^1.0.0",
+    "angular-local-storage": "^0.3.0"
   },
   "overrides": {
     "amcharts": {
@@ -87,7 +88,9 @@
         "./dist/amcharts/gantt.js",
         "./dist/amcharts/radar.js",
         "./dist/amcharts/gauge.js",
-        "./dist/amcharts/xy.js"
+        "./dist/amcharts/xy.js",
+        "./dist/amcharts/plugins/export/export.min.js",
+        "./dist/amcharts/plugins/export/export.css"
       ]
     },
     "amcharts-stock": {

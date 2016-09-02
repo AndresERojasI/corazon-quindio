@@ -62,7 +62,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 metrics_performance">
             <i class="fa fa-money col-lg-3 col-md-3 col-sm-3 col-xs-3 circle purple" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                {{ total_results.budget | currency : '€' : 2}}
+                {{ total_results.budget | currency : userSettings.currency : 2}}
                 <p class="small-text">Budget</p>
             </div>
         </div>
@@ -78,14 +78,14 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 metrics_performance">
             <i class="fa fa-user-plus col-lg-3 col-md-3 col-sm-3 col-xs-3 circle blue" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                {{ total_results[fourth_filter] | currency : '€' : 1}}
+                {{ total_results[fourth_filter] | currency : userSettings.currency : 1}}
                 <p class="small-text">{{ fourth_filter_text }}</p>
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 metrics_performance">
             <i class="fa fa-eur col-lg-3 col-md-3 col-sm-3 col-xs-3 circle orange" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                {{ total_results.revenue | currency : '€' : 2}}
+                {{ total_results.revenue | currency : userSettings.currency : 2}}
                 <p class="small-text">Revenue</p>
             </div>
         </div>

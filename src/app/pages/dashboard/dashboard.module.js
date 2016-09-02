@@ -14,7 +14,7 @@
                     title: 'Dashboard',
                     sidebarMeta: {
                         icon: 'ion-android-home',
-                        order: 0,
+                        order: 0
                     },
                     controller: 'DashboardCtrl',
                     data: {
@@ -22,15 +22,15 @@
                     }
                 });
         })
-        .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', 'leafletData','$filter',
-            function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, leafletData,$filter) {
+        .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', '$filter', 'Map',
+            function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, $filter, Map) {
 
                 $scope.scrollbarConfig = {
                     autoHideScrollbar: false,
                     theme: 'dark',
                     scrollInertia: 400,
                     axis: 'y'
-                }
+                };
 
                 if ($rootScope.dashboardCalculated || AnalyticsService.informationLoaded) {
                     AnalyticsService.calculateDashboard($scope);
@@ -42,39 +42,13 @@
                     });
                 }
 
-
-                // Leaflet Map configuration
-                L.Icon.Default.imagePath = 'images'
-                L.DomUtil.TRANSITION = true;
-                angular.extend($scope, {
-                    center: {
-                        lat: 51.505,
-                        lng: -0.09,
-                        zoom: 8
-                    },
-                    defaults: {
-                        tileLayer: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-                        minZoom: 0,
-                        maxZoom: 15,
-                        continuousWorld: true,
-                        tileLayerOptions: {
-                            opacity: 0.9,
-                            detectRetina: true,
-                            reuseTiles: true,
-                        },
-                        scrollWheelZoom: true,
-                        invalidateSize: false,
-                        markerZoomAnimation: true
-                    }
-                });
-
-                leafletData.getMap().then(function(map) {
-                    $scope.mapInstance = map;
-                });
-
                 // Variables
                 $scope.citiesList = [];
                 $scope.insights = [];
+
+                $scope.geocodeCities = function() {
+                    Map.GeocodeSet($scope.citiesList);
+                };
 
                 // Budget efficiency
                 $scope.revenue = 0;
@@ -98,7 +72,7 @@
                     min: 70,
                     max: 100,
                     color: '#8DCA2F'
-                }, ];
+                }];
 
                 // Load the daily revenue bar chart component
                 $scope.loadChart = function(data) {
@@ -108,37 +82,30 @@
                         theme: 'blur',
                         color: layoutColors.defaultText,
                         chartScrollbar: {
-                            scrollbarHeight: 10,
-                            
+                            scrollbarHeight: 10
                         },
                         mouseWheelZoomEnabled: true,
-                        export: {
-                            enabled: true,
-                            menu: [{
-                                format: "JPG",
-                                label: "Save as JPG",
-                                title: "Export chart to JPG",
-                            }, "PNG"]
+                        "export": {
+                            "enabled": true
                         },
                         dataProvider: data,
                         valueAxes: [{
                             axisAlpha: 0,
                             position: 'right',
-                            title: 'Revenue (€)',
+                            title: 'Revenue ('+$rootScope.userSettings.currency+')',
                             gridAlpha: 0.5,
-                            gridColor: '#00AFBF',
+                            gridColor: '#00AFBF'
                         }],
                         startDuration: 1,
                         graphs: [{
-                            balloonFunction: function(graphDataItem, graph){
+                            balloonFunction: function(graphDataItem, graph) {
                                 var newDate = graphDataItem.dataContext.visitDate.format('dddd, MMMM DD, YYYY');
-                                var newRevenue = $filter('currency')(graphDataItem.dataContext.revenue, '€', 2);
-                                var tooltipText = [newDate,
+                                var newRevenue = $filter('currency')(graphDataItem.dataContext.revenue, $rootScope.userSettings.currency, 2);
+                                return [newDate,
                                     '<br>',
                                     'Revenue:',
-                                    newRevenue].join('\n');
-
-                                return tooltipText;
+                                    newRevenue
+                                ].join('\n');
                             },
                             fillColorsField: 'color',
                             fillAlphas: 1,
@@ -161,7 +128,7 @@
                             gridPosition: 'start',
                             labelRotation: 45,
                             gridAlpha: 1,
-                            gridColor: layoutColors.border,
+                            gridColor: layoutColors.border
                         },
                         pathToImages: 'assets/img/'
                     });

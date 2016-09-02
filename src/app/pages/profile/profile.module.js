@@ -16,6 +16,9 @@
           title: 'Profile',
           templateUrl: 'app/pages/profile/profile.html',
           controller: 'ProfilePageCtrl',
+            data: {
+                requireLogin: true
+            }
         });
   }
 

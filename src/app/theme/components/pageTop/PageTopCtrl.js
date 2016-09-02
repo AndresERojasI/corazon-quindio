@@ -9,7 +9,7 @@
         .controller('PageTopCtrl', PageTopCtrl);
 
     /** @ngInject */
-    function PageTopCtrl($scope, sidebarService, $location, $rootScope) {
+    function PageTopCtrl($scope, sidebarService, $location, $rootScope, $filter) {
         // Date range selector for global query date administration
         $scope.$watch('queryRange', function(newValue, oldValue) {
             $rootScope.$broadcast('queryRangeChanged', {
@@ -29,7 +29,11 @@
                 angular.element('#date_selector').data('daterangepicker').setEndDate(moment(data.settings.userSettings.queryEnddate).add(1, 'days'));
                 $scope.queryRange.endDate = moment(data.settings.userSettings.queryEnddate);
             }
+
+            $scope.profilePicture = $filter('profilePicture')($rootScope.currentUser.profile_picture);
         });
+
+
 
         drawMenu();
         $scope.$on('$locationChangeSuccess', function() {

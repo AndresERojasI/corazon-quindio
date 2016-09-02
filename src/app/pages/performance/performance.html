@@ -58,21 +58,21 @@
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 white metrics_performance">
             <i class="fa fa-user col-lg-3 col-md-3 col-sm-3 col-xs-3 circle purple" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                {{ cost_per_user | currency : '€' : 1}}
+                {{ cost_per_user | currency : userSettings.currency : 1}}
                 <p class="small-text">Cost Per Returning Visitor</p>
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 white metrics_performance">
             <i class="fa fa-users col-lg-3 col-md-3 col-sm-3 col-xs-3 circle blue" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                {{ cost_per_new_user | currency : '€' : 1}}
+                {{ cost_per_new_user | currency : userSettings.currency : 1}}
                 <p class="small-text">Cost Per New Visitor</p>
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 white metrics_performance">
             <i class="fa fa-user-plus col-lg-3 col-md-3 col-sm-3 col-xs-3 circle orange" aria-hidden="true"></i>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                {{ cost_per_conversion | currency : '€' : 1}}
+                {{ cost_per_conversion | currency : userSettings.currency : 1}}
                 <p class="small-text">Cost Per Conversion</p>
             </div>
         </div>
@@ -129,9 +129,9 @@
                     <tr ng-repeat="item in smartTableData">
                         <td ng-show="tableColumns.name.enabled" class="text-left">{{ item.name }}</td>
                         <td ng-show="tableColumns.ads.enabled">{{ item.ads | currency : '' : 2}}</td>
-                        <td ng-show="tableColumns.budget.enabled">{{ item.budget | currency : '€' : 2}}</td>
-                        <td ng-show="tableColumns.roi.enabled">{{ item.roi | currency : '€' : 2}}</td>
-                        <td ng-show="tableColumns.revenue.enabled">{{ item.revenue | currency : '€' : 2}}</td>
+                        <td ng-show="tableColumns.budget.enabled">{{ item.budget | currency : userSettings.currency : 2}}</td>
+                        <td ng-show="tableColumns.roi.enabled">{{ item.roi | currency : userSettings.currency : 2}}</td>
+                        <td ng-show="tableColumns.revenue.enabled">{{ item.revenue | currency : userSettings.currency : 2}}</td>
                         <td ng-show="tableColumns.users.enabled">{{ item.users | currency : '' : 2}}</td>
                         <td ng-show="tableColumns.new_users.enabled">{{ item.new_users | currency : '' : 2}}</td>
                         <td ng-show="tableColumns.conversions.enabled">{{ item.conversions | currency : '' : 2}}</td>

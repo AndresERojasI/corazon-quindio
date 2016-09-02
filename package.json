@@ -48,7 +48,7 @@
     "gulp-zip": "^3.0.2"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install --allow-root"
   },
   "dependencies": {
     "angular-aria": "^1.5.5",

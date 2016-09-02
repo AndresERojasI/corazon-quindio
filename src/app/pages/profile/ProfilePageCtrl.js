@@ -9,81 +9,126 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal) {
-    $scope.picture = $filter('profilePicture')('Nasta');
+  function ProfilePageCtrl($scope, $filter, $rootScope, $uibModal, RestApi, AnalyticsService) {
 
-    $scope.removePicture = function () {
-      $scope.picture = $filter('appImage')('theme/no-photo.png');
-      $scope.noPicture = true;
-    };
+      $scope.user = {
+          picture : $filter('profilePicture')($rootScope.currentUser.profile_picture),
+          name : $rootScope.currentUser.name,
+          email : $rootScope.currentUser.email,
+          occupation : $rootScope.currentUser.occupation,
+          password : $rootScope.currentUser.password,
+          passwordConfirm: ''
+      };
 
-    $scope.uploadPicture = function () {
-      var fileInput = document.getElementById('uploadFile');
-      fileInput.click();
+      $scope.updateProfile = function(){
+          if($scope.user.length == 0){
+              $uibModal.open({
+                  animation: true,
+                  template: 'app/theme/generalViews/noPassword.html',
+                  size: 'sm',
+                  scope: $rootScope,
+                  keyboard: false,
+                  backdrop: 'static'
+              });
 
-    };
+              return;
+          }
 
-    $scope.socialProfiles = [
-      {
-        name: 'Facebook',
-        href: 'https://www.facebook.com/akveo/',
-        icon: 'socicon-facebook'
-      },
-      {
-        name: 'Twitter',
-        href: 'https://twitter.com/akveo_inc',
-        icon: 'socicon-twitter'
-      },
-      {
-        name: 'Google',
-        icon: 'socicon-google'
-      },
-      {
-        name: 'LinkedIn',
-        href: 'https://www.linkedin.com/company/akveo',
-        icon: 'socicon-linkedin'
-      },
-      {
-        name: 'GitHub',
-        href: 'https://github.com/akveo',
-        icon: 'socicon-github'
-      },
-      {
-        name: 'StackOverflow',
-        icon: 'socicon-stackoverflow'
-      },
-      {
-        name: 'Dribbble',
-        icon: 'socicon-dribble'
-      },
-      {
-        name: 'Behance',
-        icon: 'socicon-behace'
-      }
-    ];
+          if($scope.user.length < 6){
+              $uibModal.open({
+                  animation: true,
+                  template: 'app/theme/generalViews/notLongPassword.html',
+                  size: 'sm',
+                  scope: $rootScope,
+                  keyboard: false,
+                  backdrop: 'static'
+              });
 
-    $scope.unconnect = function (item) {
-      item.href = undefined;
-    };
+              return;
+          }
 
-    $scope.showModal = function (item) {
-      $uibModal.open({
-        animation: false,
-        controller: 'ProfileModalCtrl',
-        templateUrl: 'app/pages/profile/profileModal.html'
-      }).result.then(function (link) {
-          item.href = link;
-        });
-    };
+          /**if($scope.user.password != $scope.user.passwordConfirm){
+              $uibModal.open({
+                  animation: true,
+                  template: 'app/theme/generalViews/passwordMissmatch.html',
+                  size: 'sm',
+                  scope: $rootScope,
+                  keyboard: false,
+                  backdrop: 'static'
+              });
 
-    $scope.getFile = function () {
-      fileReader.readAsDataUrl($scope.file, $scope)
-          .then(function (result) {
-            $scope.picture = result;
+              return;
+          }**/
+
+          var infoModal = $uibModal.open({
+              animation: true,
+              templateUrl: 'app/theme/generalViews/savingProfile.html',
+              size: 'sm',
+              scope: $rootScope,
+              keyboard: false,
+              backdrop: 'static'
           });
-    };
 
-    $scope.switches = [true, true, false, true, true, false];
+          RestApi.setUserProfile($rootScope.currentUser.userId, $scope.user)
+              .then(function(response){
+                  alert('Changes saved');
+                  infoModal.close();
+                  window.reload();
+              })
+              .catch(function(error){
+                  alert('Error saving changes');
+                  infoModal.close();
+              });
+      };
+
+
+      if($rootScope.userSettings){
+          var settingscopy = JSON.parse(JSON.stringify($rootScope.userSettings));
+          $scope.settings = {
+              goalField: $rootScope.userSettings.goalField,
+              goalLimit: $rootScope.userSettings.goalLimit,
+              goalRevenue: $rootScope.userSettings.goalRevenue,
+              currency: $rootScope.userSettings.currency,
+              queryStartdate: $rootScope.userSettings.queryStartdate,
+              queryEnddate: $rootScope.userSettings.queryEnddate
+          };
+      }else{
+          //Intercept the Loaded information action
+          $rootScope.$on('informationLoaded', function(){
+              $scope.settings = {
+                  goalField: $rootScope.userSettings.goalField,
+                  goalLimit: $rootScope.userSettings.goalLimit,
+                  goalRevenue: $rootScope.userSettings.goalRevenue,
+                  currency: $rootScope.userSettings.currency,
+                  queryStartdate: $rootScope.userSettings.queryStartdate,
+                  queryEnddate: $rootScope.userSettings.queryEnddate
+              };
+          });
+      }
+
+
+      $scope.updateSettings = function(){
+          var infoModal = $uibModal.open({
+              animation: true,
+              templateUrl: 'app/theme/generalViews/savingSettings.html',
+              size: 'sm',
+              scope: $rootScope,
+              keyboard: false,
+              backdrop: 'static'
+          });
+
+
+          RestApi.setUserSettings($rootScope.currentUser.userId, $scope.settings)
+              .then(function(response){
+                  window.reload();
+              })
+              .catch(function(error){
+                  window.reload();
+              });
+      };
+
+
+
   }
 
 })();

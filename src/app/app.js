@@ -27,13 +27,18 @@ angular.module('ROA', [
   'ui-leaflet',
   'ngScrollbars',
   'rt.resize',
+  'LocalStorageModule',
   'ROA.theme',
   'ROA.pages',
 
   'environment'
 ]).config([
-  'AclServiceProvider', 'envServiceProvider',
-  function(AclServiceProvider,  envServiceProvider) {
+  'AclServiceProvider', 'envServiceProvider', 'localStorageServiceProvider',
+  function(AclServiceProvider,  envServiceProvider, localStorageServiceProvider) {
+
+  localStorageServiceProvider
+      .setPrefix('ROA2')
+      .setStorageType('localStorage');;
 
   // Configurate the ACL Provider
   var myConfig = {
@@ -46,10 +51,11 @@ angular.module('ROA', [
   envServiceProvider.config({
     vars: {
       development: {
-        restApiEndpoint: 'http://app2.resultsonair.com:1337',
-        baseAppUrl: 'http://app2.resultsonair.com:3000',
-        baseAppLogin: 'http://app2.resultsonair.com:3000/#/login',
-        baseAppNoClient: 'http://app2.resultsonair.com:3000/#/noClient'
+        restApiEndpoint: 'http://restapi.resultsonair.com:1337',
+
+        baseAppUrl: 'http://app2.resultsonair.com',
+        baseAppLogin: 'http://app2.resultsonair.com/#/login',
+        baseAppNoClient: 'http://app2.resultsonair.com/#/noClient'
       },
       production: {},
     }

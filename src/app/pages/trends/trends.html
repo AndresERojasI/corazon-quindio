@@ -51,23 +51,23 @@
         <div class="col-lg-4">
             <div class="col-lg-12 performance_metrics pink">
                 <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">COST PER RETURNING VISITOR</div>
-                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-usd"></i></div>
                 <strong>
-                    {{ cpu | currency : '€' : 2}}
+                    {{ cpu | currency : userSettings.currency : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 pink-salmon performance_metrics">
                 <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">COST PER NEW VISITOR</div>
-                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-usd"></i></div>
                 <strong>
-                    {{ cpnu | currency : '€' : 2}}
+                    {{ cpnu | currency : userSettings.currency : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 red performance_metrics">
                 <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">COST PER CONVERSION</div>
-                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-euro"></i></div>
+                <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-usd"></i></div>
                 <strong>
-                    {{ cpc | currency : '€' : 2}}
+                    {{ cpc | currency : userSettings.currency : 2}}
                 </strong>
             </div>
         </div>
@@ -88,14 +88,14 @@
                 <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">Budget</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-money"></i></div>
                 <strong>
-                    {{ budget | currency : '€' : 2}}
+                    {{ budget | currency : userSettings.currency : 2}}
                 </strong>
             </div>
             <div class="col-lg-12 dark-blue performance_metrics">
                 <div class="label col-lg-5 col-md-3 col-sm-3 col-xs-5 ">Revenue</div>
                 <div class="icon col-lg-2 col-md-2 col-sm-2 col-xs-2"><i class="fa fa-line-chart"></i></div>
                 <strong>
-                    {{ revenue | currency : '€' : 2}}
+                    {{ revenue | currency : userSettings.currency : 2}}
                 </strong>
             </div>
         </div>
