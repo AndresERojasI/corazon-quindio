@@ -171,7 +171,7 @@
                             });
                         });
                 };
-                service.initService();
+                //service.initService();
 
 
                 // Calculation of the dashboard Metrics

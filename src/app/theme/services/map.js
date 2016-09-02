@@ -18,8 +18,8 @@
 
                 mapService.initMap = function () {
                     
-                    var centerLat = parseFloat($rootScope.currentClient.latitude);
-                    var centerLong = parseFloat($rootScope.currentClient.longitude);
+                    var centerLat = 4.500576;
+                    var centerLong = -75.722682;
 
                     L.Icon.Default.imagePath = 'images';
                     L.DomUtil.TRANSITION = true;
@@ -36,7 +36,7 @@
                     $rootScope.center = {
                         lat: centerLat,
                         lng: centerLong,
-                        zoom: 6
+                        zoom: 12
                     };
 
                     $rootScope.defaults = {

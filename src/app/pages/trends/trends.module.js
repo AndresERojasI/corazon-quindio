@@ -8,10 +8,10 @@
     angular.module('ROA.pages.trends', [])
         .config(function($stateProvider) {
             $stateProvider
-                .state('trends', {
-                    url: '/trends',
+                .state('tendencias', {
+                    url: '/tendencias',
                     templateUrl: 'app/pages/trends/trends.html',
-                    title: 'Trends',
+                    title: 'Tendencias',
                     sidebarMeta: {
                         icon: 'ion-android-home',
                         order: 0,

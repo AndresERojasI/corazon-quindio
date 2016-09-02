@@ -21,7 +21,7 @@
     var subdomain = SubdomainService.company || false;
 
     // Force login on any required page
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+    /**$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
       var requireLogin = toState.data.requireLogin;
       if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
         event.preventDefault();
@@ -41,11 +41,11 @@
             return $state.go('login');
           });
       }
-    });
+    });**/
 
     // Validate the domain, if App then continue if not try to find the client
-    if(subdomain && subdomain === 'app'){
-      $rootScope.$pageFinishedLoading = true;
+    $rootScope.$pageFinishedLoading = true;
+    /**if(subdomain && subdomain === 'app'){
     }else{
 
       var whatToWait = [
@@ -65,7 +65,7 @@
         $rootScope.$pageFinishedLoading = true;
         return window.location = envService.read('baseAppLogin');
       });
-    }
+    }**/
 
     $rootScope.$isMobile =  (/android|webos|iphone|ipad|ipod|blackberry|windows phone/).test(navigator.userAgent.toLowerCase());
     $rootScope.$isMenuCollapsed = window.innerWidth <= layoutSizes.resWidthCollapseSidebar;

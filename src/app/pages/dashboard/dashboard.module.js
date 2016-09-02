@@ -32,7 +32,7 @@
                     axis: 'y'
                 };
 
-                if ($rootScope.dashboardCalculated || AnalyticsService.informationLoaded) {
+                /**if ($rootScope.dashboardCalculated || AnalyticsService.informationLoaded) {
                     AnalyticsService.calculateDashboard($scope);
                 } else {
                     //Intercept the Loaded information action
@@ -40,7 +40,7 @@
                         AnalyticsService.calculateDashboard($scope);
                         $rootScope.dashboardCalculated = true;
                     });
-                }
+                }**/
 
                 // Variables
                 $scope.citiesList = [];
@@ -73,6 +73,8 @@
                     max: 100,
                     color: '#8DCA2F'
                 }];
+
+                $scope.budgetEfficiency = 0;
 
                 // Load the daily revenue bar chart component
                 $scope.loadChart = function(data) {

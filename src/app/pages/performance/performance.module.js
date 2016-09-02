@@ -8,10 +8,10 @@
     angular.module('ROA.pages.performance', [])
         .config(function($stateProvider) {
             $stateProvider
-                .state('performance', {
-                    url: '/performance',
+                .state('pacientes', {
+                    url: '/pacientes',
                     templateUrl: 'app/pages/performance/performance.html',
-                    title: 'Performance',
+                    title: 'Pacientes',
                     sidebarMeta: {
                         icon: 'ion-android-home',
                         order: 0

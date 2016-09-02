@@ -11,9 +11,9 @@
     'ROA.pages.dashboard',
     'ROA.pages.performance',
     'ROA.pages.trends',
-    'ROA.pages.roi',
+    //'ROA.pages.roi',
     'ROA.pages.login',
-    'ROA.pages.noClient',
+    //'ROA.pages.noClient',
     'ROA.pages.profile',
   ])
       .config(routeConfig);

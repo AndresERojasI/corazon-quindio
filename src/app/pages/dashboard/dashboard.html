@@ -6,8 +6,8 @@
                 <div class="panel-body metrics blue">
                     <i class="fa fa-line-chart col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
                     <div class="col-lg-7 col-md-8 col-sm-9 col-xs-9">
-                        {{ revenue | currency : userSettings.currency : 1}}
-                        <p class="small-text">Revenue from TV</p>
+                        0
+                        <p class="small-text">Pacientes Totales</p>
                     </div>
                 </div>
             </div>
@@ -16,8 +16,8 @@
             <div class="panel panel-default">
                 <div class="panel-body metrics orange"><i class="fa fa-user col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
                     <div class="col-lg-7 col-md-8 col-sm-9 col-xs-9">
-                        {{ costPerConversion | currency : userSettings.currency : 1}}
-                        <p class="small-text">Cost Per Conversion</p>
+                        0
+                        <p class="small-text">Pacientes en Riesgo</p>
                     </div>
                 </div>
             </div>
@@ -25,10 +25,10 @@
         <div class="col-md-4 col-lg-12 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-body metrics turquoise">
-                    <i class="ion-cash col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
+                    <i class="fa fa-users col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
                     <div class="col-lg-7 col-md-8 col-sm-9 col-xs-9">
-                        {{ roi | currency : '' : 1}}x
-                        <p class="small-text">Return On Investment</p>
+                        0
+                        <p class="small-text">Pacientes sin Riesgo</p>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-lg-4 panel panel-default white" id="map-top-destinations" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
                     <div class="xe-label">
-                        <h2>Top Destinations</h2>
+                        <h2>Principales Zonas</h2>
                     </div>
                     <table class="table table-condensed">
                         <tbody>
@@ -83,7 +83,7 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="panel panel-default" id="recent_insights_panel">
-                <h2>RECENT INSIGHTS</h2>
+                <h2>Ultimas Alertas</h2>
                 <div class="panel-body">
                     <ul style="font-size: 1.3em">
                         <li class="mt-10 mb-15" ng-repeat="(key, insight) in insights">
