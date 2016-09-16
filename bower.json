@@ -1,11 +1,11 @@
 {
-  "name": "blur-admin",
+  "name": "corazon_quindio",
   "version": "1.1.1",
-  "homepage": "https://github.com/1itvinka/blur-admin",
+  "homepage": "https://github.com/AndresRojasIsaza/corazon-quindio",
   "authors": [
-    "akveo"
+    "Andrés Rojas"
   ],
-  "description": "Blur Admin HTML template",
+  "description": "Aplicación para el seguimiento y alerta temprana de pacientes con riesgo de enfermedades cardiacas",
   "license": "MIT",
   "ignore": [
     "**/.*",

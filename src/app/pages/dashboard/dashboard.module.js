@@ -22,8 +22,22 @@
                     }
                 });
         })
-        .controller('DashboardCtrl', ['$rootScope', '$scope', 'AnalyticsService', 'layoutColors', 'layoutPaths', '$filter', 'Map',
-            function($rootScope, $scope, AnalyticsService, layoutColors, layoutPaths, $filter, Map) {
+        .controller('DashboardCtrl', ['$rootScope', '$scope', 'layoutColors', 'layoutPaths', '$filter', 'Map','RestApi', '$state',
+            function($rootScope, $scope, layoutColors, layoutPaths, $filter, Map, RestApi, $state) {
+                $scope.pacientes_totales = 0;
+                $scope.pacientes_riesgo = 0;
+                $scope.pacientes_sin_riesgo = 0;
+                RestApi.getDashboard()
+                    .then(function (result) {
+                        $scope.pacientes_totales = result.total;
+                        $scope.pacientes_riesgo = result.enRiesgo;
+                        $scope.pacientes_sin_riesgo = result.sinRiesgo;
+                        $scope.alertas = result.alertas;
+                        $scope.loadChart(result.riskPerAge);
+                    })
+                    .catch(function(error){
+
+                    });
 
                 $scope.scrollbarConfig = {
                     autoHideScrollbar: false,
@@ -31,16 +45,6 @@
                     scrollInertia: 400,
                     axis: 'y'
                 };
-
-                /**if ($rootScope.dashboardCalculated || AnalyticsService.informationLoaded) {
-                    AnalyticsService.calculateDashboard($scope);
-                } else {
-                    //Intercept the Loaded information action
-                    $rootScope.$on('informationLoaded', function() {
-                        AnalyticsService.calculateDashboard($scope);
-                        $rootScope.dashboardCalculated = true;
-                    });
-                }**/
 
                 // Variables
                 $scope.citiesList = [];
@@ -50,35 +54,26 @@
                     Map.GeocodeSet($scope.citiesList);
                 };
 
-                // Budget efficiency
-                $scope.revenue = 0;
-                $scope.costPerConversion = 0;
-                $scope.roi = 0;
-                $scope.dailyDataStore = [];
+                $scope.calcularRiesgoTotal = function(){
+                  var continueTo = confirm('Esta acción puede tardar algunos minutos, ¿Está seguro de continuar?');
 
-                $scope.upperLimit = 100;
-                $scope.lowerLimit = 0;
-                $scope.unit = "%";
-                $scope.precision = 0;
-                $scope.ranges = [{
-                    min: 0,
-                    max: 30,
-                    color: '#C50200'
-                }, {
-                    min: 30,
-                    max: 70,
-                    color: '#FDC702'
-                }, {
-                    min: 70,
-                    max: 100,
-                    color: '#8DCA2F'
-                }];
+                    if(continueTo){
+                        $state.go('calcularRiesgoTotal');
+                    }
+                };
 
-                $scope.budgetEfficiency = 0;
+
 
                 // Load the daily revenue bar chart component
                 $scope.loadChart = function(data) {
-                    // Daily revenue Chart
+                    var new_data = [];
+                    data.map(function (currentValue,index,arr) {
+                        new_data.push({count: parseInt(currentValue.count), edad: parseInt(currentValue.edad)});
+                    });
+
+                    console.log(data);
+                    console.log(new_data);
+                    // Risk per age chart
                     var barChart = AmCharts.makeChart('barChart', {
                         type: 'serial',
                         theme: 'blur',
@@ -90,30 +85,21 @@
                         "export": {
                             "enabled": true
                         },
-                        dataProvider: data,
+                        dataProvider: new_data,
                         valueAxes: [{
                             axisAlpha: 0,
                             position: 'right',
-                            title: 'Revenue ('+$rootScope.userSettings.currency+')',
+                            title: 'Cantidad de Pacientes',
                             gridAlpha: 0.5,
                             gridColor: '#00AFBF'
                         }],
                         startDuration: 1,
                         graphs: [{
-                            balloonFunction: function(graphDataItem, graph) {
-                                var newDate = graphDataItem.dataContext.visitDate.format('dddd, MMMM DD, YYYY');
-                                var newRevenue = $filter('currency')(graphDataItem.dataContext.revenue, $rootScope.userSettings.currency, 2);
-                                return [newDate,
-                                    '<br>',
-                                    'Revenue:',
-                                    newRevenue
-                                ].join('\n');
-                            },
                             fillColorsField: 'color',
                             fillAlphas: 1,
                             lineAlpha: 0.2,
                             type: 'column',
-                            valueField: 'revenue'
+                            valueField: 'count'
                         }],
                         chartCursor: {
                             categoryBalloonEnabled: true,
@@ -125,7 +111,7 @@
                         chartCursorSettings: {
 
                         },
-                        categoryField: 'date',
+                        categoryField: 'edad',
                         categoryAxis: {
                             gridPosition: 'start',
                             labelRotation: 45,

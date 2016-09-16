@@ -10,20 +10,4 @@
             </li>
         </ul>
     </nav>
-    <!-- Profile Access -->
-    <div class="user-profile clearfix">
-        <div class="al-user-profile" uib-dropdown>
-            <a uib-dropdown-toggle class="profile-toggle-link">
-                <img ng-src="{{profilePicture}}">
-            </a>
-            <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
-                <li><i class="dropdown-arr"></i></li>
-                <li><a ui-sref="profile"><i class="fa fa-user"></i>Profile</a></li>
-                <li><a ui-sref="login" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- date selector -->
-    <input id="date_selector" class="pull-right hidden-xs" readonly="readonly" type="daterange" ng-model="queryRange" ranges="datepickerRanges" format="MMM D,YYYY" separator="/" options="{opens:'left', showDropdowns: true}">
-    </div>
 </div>

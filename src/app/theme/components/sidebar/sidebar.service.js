@@ -6,7 +6,7 @@
 
   /** @ngInject */
   function sidebarService($state) {
-    var ignoredStates = ['login', 'noClient'];
+    var ignoredStates = ['login', 'noClient', 'calcularRiesgoTotal'];
     var staticMenuItems = [];
 
     this.getMenuItems = function() {

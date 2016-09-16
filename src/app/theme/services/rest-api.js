@@ -10,12 +10,24 @@
                 // Service object
                 var restApi = {};
 
-                // Validation of the Unique Client identifier
-                restApi.validateSubdomain = function(subdomain) {
+                restApi.getDashboard= function(){
+                    return new Promise(function (success, fail) {
+                        $http({
+                            method: 'GET',
+                            url: endpoint + '/paciente/dashboard'
+                        }).then(function(response) {
+                            success(response.data);
+                        }, function(response) {
+                            fail(response.data);
+                        });
+                    });
+                };
+
+                restApi.getAllPacientes = function () {
                     return new Promise(function(success, fail) {
                         $http({
                             method: 'GET',
-                            url: endpoint + '/clients/subdomain/' + subdomain
+                            url: endpoint + '/paciente/all'
                         }).then(function(response) {
                             success(response.data);
                         }, function(response) {
@@ -24,45 +36,12 @@
                     });
                 };
 
-                // Autenticate user against the API
-                restApi.authenticateUser = function(user, password, subdomain) {
-                    return new Promise(function(success, fail) {
-                        $http({
-                            method: 'POST',
-                            url: endpoint + '/login/' + subdomain,
-                            data: {
-                                user: user,
-                                password: password
-                            }
-                        }).then(function(response) {
-                            success(response.data);
-                        }, function(response) {
-                            fail(response.data);
-                        });
-                    });
-                };
 
-                restApi.validateToken = function(token) {
-                    return new Promise(function(success, fail) {
-                        $http({
-                            method: 'POST',
-                            url: endpoint + '/validate_token',
-                            data: {
-                                token: token
-                            }
-                        }).then(function(response) {
-                            success(response.data);
-                        }, function(response) {
-                            fail(response.data);
-                        });
-                    });
-                };
-
-                restApi.getUserSettings = function(id) {
+                restApi.getVisitaPaciente = function (id) {
                     return new Promise(function(success, fail) {
                         $http({
                             method: 'GET',
-                            url: endpoint + '/user/' + id + '/settings'
+                            url: endpoint + '/paciente/visita/buscar/'+id
                         }).then(function(response) {
                             success(response.data);
                         }, function(response) {
@@ -71,60 +50,15 @@
                     });
                 };
 
-                restApi.setUserSettings = function(id, settings) {
+                restApi.updatePacienteRiesgo = function(doc, porcentaje_riesgo) {
                     return new Promise(function(success, fail) {
                         $http({
                             method: 'POST',
-                            url: endpoint + '/user/' + id + '/settings',
-                            data: {settings: settings}
-                        }).then(function(response) {
-                            console.log('0here');
-                            success(response.data);
-                        }, function(response) {
-                            console.log('here');
-                            fail(response.data);
-                        });
-                    });
-                };
-
-                restApi.setUserProfile = function(id, profile) {
-                    return new Promise(function(success, fail) {
-                        $http({
-                            method: 'POST',
-                            url: endpoint + '/user/' + id + '/profile',
+                            url: endpoint + '/paciente/riesgo',
                             data: {
-                                profile: profile
+                                id: doc,
+                                porcentaje_riesgo: porcentaje_riesgo
                             }
-                        }).then(function(response) {
-                            success(response.data);
-                        }, function(response) {
-                            fail(response.data);
-                        });
-                    });
-                };
-
-                restApi.getAnalytics = function(id, startDate, endDate) {
-                    return new Promise(function(success, fail) {
-                        $http({
-                            method: 'POST',
-                            url: endpoint + '/client/' + id + '/analytics',
-                            data: {
-                                startDate: startDate,
-                                endDate: endDate
-                            }
-                        }).then(function(response) {
-                            success(response.data);
-                        }, function(response) {
-                            fail(response.data);
-                        });
-                    });
-                };
-
-                restApi.getInsights = function(id) {
-                    return new Promise(function(success, fail) {
-                        $http({
-                            method: 'GET',
-                            url: endpoint + '/client/' + id + '/insights'
                         }).then(function(response) {
                             success(response.data);
                         }, function(response) {

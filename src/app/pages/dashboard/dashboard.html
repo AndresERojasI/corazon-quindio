@@ -6,7 +6,7 @@
                 <div class="panel-body metrics blue">
                     <i class="fa fa-line-chart col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
                     <div class="col-lg-7 col-md-8 col-sm-9 col-xs-9">
-                        0
+                        {{ pacientes_totales }}
                         <p class="small-text">Pacientes Totales</p>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
             <div class="panel panel-default">
                 <div class="panel-body metrics orange"><i class="fa fa-user col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
                     <div class="col-lg-7 col-md-8 col-sm-9 col-xs-9">
-                        0
+                        {{ pacientes_riesgo}}
                         <p class="small-text">Pacientes en Riesgo</p>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <div class="panel-body metrics turquoise">
                     <i class="fa fa-users col-lg-3 col-md-3 col-sm-3 col-xs-3" aria-hidden="true"></i>
                     <div class="col-lg-7 col-md-8 col-sm-9 col-xs-9">
-                        0
+                        {{ pacientes_sin_riesgo }}
                         <p class="small-text">Pacientes sin Riesgo</p>
                     </div>
                 </div>
@@ -37,18 +37,28 @@
     </div>
     <!-- Daily Revenue Bar Chart -->
     <div class="col-lg-6 col-md-6 col-sm-6">
+        <div ng-show="pacientes_riesgo == 0">
+            <h2>No hay pacientes en riesgo, no se peude calcular la gráfica</h2>
+        </div>
         <div id="barChart" class="admin-chart"></div>
     </div>
-    <!-- Budget Efficiency Gauge -->
+    <!-- Acciones -->
     <div class="col-lg-3 col-md-6 col-sm-6">
-        <p class="text-center text-upper text-muted">BUDGET EFFICIENCY</p>
-        <div class="h1 text-secondary text-bold text-center green-text">
-            {{ budgetEfficiency | currency : '' : 1}}%
-        </div>
-        <div ng-if="budgetEfficiency">
-            <div width="100%" class="text-center" ng-radial-gauge ranges="ranges" value="budgetEfficiency" value-unit="unit" transitionMs="2000" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit">
-            </div>
-        </div>
+        <h2>Acciones:</h2><br>
+        <p>
+            Ingresa una nueva visita a un Paciente Existente
+        </p>
+        <button type="button" class="btn btn-primary btn-block">Ingresar Nueva Visita</button>
+        <br>
+        <p>
+            Registrar un nuevo Paciente
+        </p>
+        <button type="button" class="btn btn-primary btn-block">Ingresar Nuevo Paciente</button>
+        <br>
+        <p>
+            Realizar una actualización del riesgo de todos los pacientes existentes en el sistema
+        </p>
+        <button type="button" class="btn btn-primary btn-block" ng-click="calcularRiesgoTotal()">Recalcular Riesgo para Todos los Pacientes</button>
     </div>
     <div class="clearfix">
     </div>
@@ -83,11 +93,11 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="panel panel-default" id="recent_insights_panel">
-                <h2>Ultimas Alertas</h2>
+                <h2>Últimas Alertas</h2>
                 <div class="panel-body">
                     <ul style="font-size: 1.3em">
-                        <li class="mt-10 mb-15" ng-repeat="(key, insight) in insights">
-                            <p>{{ insight.insight }}</p>
+                        <li class="mt-10 mb-15" ng-repeat="(key, alerta) in alertas">
+                            <p>{{ alerta }}</p>
                         </li>
                     </ul>
                 </div>
